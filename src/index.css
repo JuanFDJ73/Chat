@@ -1,0 +1,86 @@
+:root {
+  --primary-color: #007BFF;
+  --secondary-color: #0056B3;
+  --background-color: #F8FAFC;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --button-primary: #007BFF;
+  --button-hover: #0056B3;
+  --message-sent: #E3F2FD;
+  --message-received: #FFFFFF;
+  --border-color: #CBD5E1;
+}
+
+/* Modo oscuro */
+.dark-mode {
+  --primary-color: #0A84FF;
+  --secondary-color: #1E40AF;
+  --background-color: #0F172A;
+  --text-primary: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --button-primary: #0A84FF;
+  --button-hover: #2563EB;
+  --message-sent: #1E3A8A;
+  --message-received: #334155;
+  --border-color: #475569;
+}
+
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  user-select: none;
+  overflow-x: hidden;
+  
+}
+
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-primary);
+}
+
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+button{
+  display: flex;
+  cursor: pointer;
+  outline: none;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-primary);
+  color: var(--text-primary);
+  border: none;
+  width: 200px;
+  height: 40px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: large;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}

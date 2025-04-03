@@ -1,0 +1,59 @@
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.not-found-content {
+  max-width: 600px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-button {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+
+.not-found-title {
+  font-size: 6rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.not-found-message {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin: 10px 0 20px;
+}
+
+.not-found-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--color-text);
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
