@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import useAuthStore from '../../stores/use-auth-store';
+import { sunnyOutline, moonOutline } from 'ionicons/icons';
+import { IonIcon } from '@ionic/react';
 import './Home.css';
 
 const Home = () => {
@@ -15,9 +17,12 @@ const Home = () => {
     <div className="home-container">
       <div className="home-left">
         <h1 className="home-title">Bienvenido a Chat App</h1>
-        <button onClick={toggleDarkMode} className="home-darkmode-button">
-          {darkMode ? 'Modo Claro' : 'Modo Oscuro'}
-        </button>
+        <div className="dark-toggle" onClick={toggleDarkMode}>
+          <div className="circle">
+            <IonIcon className={`icon sun ${darkMode ? "hidden" : ""}`} icon={sunnyOutline} />
+            <IonIcon className={`icon moon ${darkMode ? "" : "hidden"}`} icon={moonOutline} />
+          </div>
+        </div>
         {userLogged ? (
           <div>
             <p>Hola, {userLogged.displayName}</p>
