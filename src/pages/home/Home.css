@@ -12,16 +12,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-background);
+  background-color: var(--background-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
+.home-up {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 6px;
+  box-shadow: 0 1px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .home-up {
+  box-shadow: 0 1px 2px 4px rgb(255 255 255 / 3%);
+}
+
 /* Título */
 .home-title {
-  font-size: 2rem;
-  color: var(--color-primary);
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-left: 10px;
 }
 
 /* Botón de modo oscuro */
@@ -29,19 +42,42 @@
   margin-bottom: 20px;
 }
 
-
-/* Avatar del usuario */
-.home-avatar {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+:root{
+  --width-button: 40px;
+  --height-button: 40px;
 }
 
-/* Botón de cerrar sesión */
-.home-button.logout {
-  margin-top: 20px;
+/* Imagen del usuario */
+.home-avatar {
+  border-radius: 50%;
+  width: var(--width-button);
+  height: var(--height-button);
+  object-fit: cover;
+}
+
+/* Botones de acciones: add, settings, logout */
+.home-button {
+  width: var(--width-button);
+  height: var(--height-button);
+  background-color: var(--border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.3s ease;
+}
+
+.home-button.user {
+  width: auto;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.home-button .icon {
+  font-size: 24px;
+  color: var(--text-primary);
 }
 
 /* Sección derecha (70%) */
@@ -55,6 +91,130 @@
 .home-image {
   max-width: 100%;
   height: auto;
+}
+
+.home-chat {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+  padding-top: 10px;
+  gap: 10px;
+}
+
+/* Estilo scroll de mensajes */
+.home-chat::-webkit-scrollbar {
+  width: 6px;
+}
+
+.home-chat::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
+
+.home-chat::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+.contact {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  height: auto;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+  margin: 0 0 3% 0;
+}
+
+
+/* Modo claro */
+.contact:hover {
+  background-color: #f0f0f0;
+}
+
+/* Modo oscuro */
+.dark-mode .contact:hover {
+  background-color: #1e293b;
+}
+
+.contact-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact-title {
+  display: flex;
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-last-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  font-size: 0.9rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.view {
+  width: 25px;
+  height: 15px;
+}
+
+
+.view img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.last-message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-options {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 1px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .home-options {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 2px 4px 6px rgb(255 255 255 / 4%);
 }
 
 /* Estilo Boton Goggle */
@@ -162,16 +322,16 @@
   opacity: 8%;
 }
 
-:root{
-  --width: 100px;
-  --height: 50px;
-  --circle: 40px;
+:root {
+  --width-dark-toggle: 50px;
+  --height-dark-toggle: 25px;
+  --circle: 20px;
 }
 
 /* Estilos del botón de modo oscuro */
 .dark-toggle {
-  width: var(--width);
-  height: var(--height);
+  width: var(--width-dark-toggle);
+  height: var(--height-dark-toggle);
   background-color: #DFDEDE;
   border-radius: 999px;
   cursor: pointer;
@@ -180,6 +340,7 @@
   align-items: center;
   position: relative;
   padding: 5px;
+  margin-right: 10px;
 }
 
 .dark-mode .dark-toggle {
@@ -201,14 +362,14 @@
 }
 
 .dark-mode .circle {
-  transform: translateX(50px);
+  transform: translateX(30px);
   background-color: #2A2A2C;
 }
 
 /* Animacion de los iconos */
 .icon {
   position: absolute;
-  font-size: 24px;
+  font-size: 16px;
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
@@ -220,6 +381,11 @@
 .moon {
   color: white;
   transform: translateY(-100%);
+}
+
+.check {
+  color: var(--text-primary);
+  font-size: 15px;
 }
 
 /* Cambio en modo oscuro */

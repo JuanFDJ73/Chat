@@ -6,8 +6,8 @@
   --text-secondary: #475569;
   --button-primary: #007BFF;
   --button-hover: #0056B3;
-  --message-sent: #E3F2FD;
-  --message-received: #FFFFFF;
+  /* --message-sent: #E3F2FD;
+  --message-received: #FFFFFF; */
   --border-color: #CBD5E1;
 }
 
@@ -20,8 +20,8 @@
   --text-secondary: #94A3B8;
   --button-primary: #0A84FF;
   --button-hover: #2563EB;
-  --message-sent: #1E3A8A;
-  --message-received: #334155;
+  /* --message-sent: #1E3A8A;
+  --message-received: #334155; */
   --border-color: #475569;
 }
 
@@ -70,15 +70,18 @@ button{
   outline: none;
   align-items: center;
   justify-content: center;
-  background-color: var(--button-primary);
+  background-color: var(--border-color);
   color: var(--text-primary);
   border: none;
-  width: 200px;
-  height: 40px;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: large;
   transition: background 0.3s ease;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 15px;
 }
 
 button:hover {

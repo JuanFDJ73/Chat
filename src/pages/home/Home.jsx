@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useAuthStore from '../../stores/use-auth-store';
-import { sunnyOutline, moonOutline } from 'ionicons/icons';
+import { sunnyOutline, moonOutline, checkmarkDone, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/react';
 import './Home.css';
 
@@ -16,26 +16,74 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="home-left">
-        <h1 className="home-title">Bienvenido a Chat App</h1>
-        <div className="dark-toggle" onClick={toggleDarkMode}>
-          <div className="circle">
-            <IonIcon className={`icon sun ${darkMode ? "hidden" : ""}`} icon={sunnyOutline} />
-            <IonIcon className={`icon moon ${darkMode ? "" : "hidden"}`} icon={moonOutline} />
-          </div>
-        </div>
         {userLogged ? (
-          <div>
-            <p>Hola, {userLogged.displayName}</p>
-            <img
-              src={userLogged.photoURL || './perfil.png'}
-              alt="Avatar"
-              className="home-avatar"
-            />
-            <br />
-            <button onClick={logout} className="home-button logout">
-              Cerrar sesión
-            </button>
-          </div>
+          <>
+            <div className='home-up'>
+              <h1 className="home-title">Chat App</h1>
+              <div className="dark-toggle" onClick={toggleDarkMode}>
+                <div className="circle">
+                  <IonIcon className={`icon sun ${darkMode ? "hidden" : ""}`} icon={sunnyOutline} />
+                  <IonIcon className={`icon moon ${darkMode ? "" : "hidden"}`} icon={moonOutline} />
+                </div>
+              </div>
+            </div>
+            <div className="home-chat">
+              {/* Contacto ejemplo */}
+              <button className="contact">
+                <img
+                  src="/perfil.png"
+                  className="contact-image"
+                />
+                <div className="contact-info">
+                  <div className="contact-title">User Prueba 1</div>
+                  <div className="contact-last-message">
+                    <div className="view">
+                      <IonIcon className="icon check" icon={checkmarkDone} />
+                    </div>
+                    <div className="last-message">
+                      <p>Prueba de ultimo mensaje</p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+              {/* Contacto ejemplo 2*/}
+              <button className="contact">
+                <img
+                  src="/perfil.png"
+                  className="contact-image"
+                />
+                <div className="contact-info">
+                  <div className="contact-title">User Prueba 2</div>
+                  <div className="contact-last-message">
+                    <div className="view">
+                      <IonIcon className="icon check" icon={checkmarkDone} />
+                    </div>
+                    <div className="last-message">
+                      <p>Prueba de ultimo mensaje</p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div className='home-options'>
+              <button className="home-button user">
+                <img
+                  src={userLogged.photoURL || './perfil.png'}
+                  alt="Avatar"
+                  className="home-avatar"
+                />
+              </button>
+              <button className="home-button add">
+                <IonIcon className="icon add" icon={personAddOutline} />
+              </button>
+              <button className="home-button settings">
+                <IonIcon className="icon settings" icon={settingsOutline} />
+              </button>
+              <button className="home-button logout" onClick={logout}>
+                <IonIcon className="icon logout" icon={logOutOutline} />
+              </button>
+            </div>
+          </>
         ) : (
           <button onClick={loginWithPopup} className="gsi-material-button">
             <div className="gsi-material-button-state"></div>
