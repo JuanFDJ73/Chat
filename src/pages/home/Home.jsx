@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
-import { sunnyOutline, moonOutline, checkmarkDone, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
+import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/react';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
+import ContactButton from '../../components/ContactButton.jsx';
 import './Home.css';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { loginWithPopup, logout, userLogged } = useAuthStore();
+  const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark-mode', !darkMode);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 500);
-  }, []);
+  const goToSettings = () => {
+    userLogged ? navigate('/Settings') : navigate('/');
+  };
 
-  if (loading) return <LoadingSpinner />;
+  const goToProfile = () => {
+    userLogged ? navigate('/Profile') : navigate('/');
+  };
+
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="home">
@@ -39,44 +44,19 @@ const Home = () => {
             </div>
             <div className="home-chat">
               {/* Contacto ejemplo */}
-              <button className="contact">
-                <img
-                  src="/perfil.png"
-                  className="contact-image"
-                />
-                <div className="contact-info">
-                  <div className="contact-title">User Prueba 1</div>
-                  <div className="contact-last-message">
-                    <div className="view">
-                      <IonIcon className="icon check" icon={checkmarkDone} />
-                    </div>
-                    <div className="last-message">
-                      <p>Prueba de ultimo mensaje</p>
-                    </div>
-                  </div>
-                </div>
-              </button>
-              {/* Contacto ejemplo 2*/}
-              <button className="contact">
-                <img
-                  src="/perfil.png"
-                  className="contact-image"
-                />
-                <div className="contact-info">
-                  <div className="contact-title">User Prueba 2</div>
-                  <div className="contact-last-message">
-                    <div className="view">
-                      <IonIcon className="icon check" icon={checkmarkDone} />
-                    </div>
-                    <div className="last-message">
-                      <p>Prueba de ultimo mensaje</p>
-                    </div>
-                  </div>
-                </div>
-              </button>
+              <ContactButton
+                name="User Prueba 1"
+                image="/perfil.png"
+                lastMessage="Prueba de ultimo mensaje"
+              />
+              <ContactButton
+                name="User Prueba 2"
+                image="/perfil.png"
+                lastMessage="Prueba de ultimo mensaje2"
+              />
             </div>
             <div className='home-options'>
-              <button className="home-button user">
+              <button className="home-button user" onClick={goToProfile}>
                 <img
                   src={userLogged.photoURL || './perfil.png'}
                   alt="Avatar"
@@ -86,7 +66,7 @@ const Home = () => {
               <button className="home-button add">
                 <IonIcon className="icon add" icon={personAddOutline} />
               </button>
-              <button className="home-button settings">
+              <button className="home-button settings" onClick={goToSettings}>
                 <IonIcon className="icon settings" icon={settingsOutline} />
               </button>
               <button className="home-button logout" onClick={logout}>

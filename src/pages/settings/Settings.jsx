@@ -2,23 +2,23 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import { arrowBackCircleOutline, arrowBackCircle } from 'ionicons/icons';
-import './Profile.css';
+import './Settings.css';
 
 
-const Profile = () => {
+const Settings = () => {
     const navigate = useNavigate();
-
+    
     return (
         <>
-            <div className="Profile">
-                <div className="Profile-container">
+            <div className="Settings">
+                <div className="Settings-container">
 
                     <div>
                         <button onClick={() => navigate('/')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
-                        <h1>Profile</h1>
-                        <p>This is the Profile page.</p>
+                        <h1>Settings</h1>
+                        <p>This is the Settings page.</p>
                     </div>
                 </div>
             </div>
@@ -26,4 +26,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default Settings;

@@ -6,15 +6,24 @@ const provider = new GoogleAuthProvider();
 
 const useAuthStore = create((set) => {
     const observeAuthState = () => {
+
+        set({ isLoading: true });
+
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            user ? set({ userLogged: user }) : set({ userLogged: null });
+            set({
+                userLogged: user || null,
+                isLoading: false,
+            });
         });
         return unsubscribe;
     };
+
     observeAuthState();
 
     return {
         userLogged: null,
+        isLoading: true,
+
         loginWithPopup: async () => {
             try {
                 await signInWithPopup(auth, provider);
