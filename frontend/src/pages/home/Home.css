@@ -42,7 +42,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 6px;
+  min-height: 58px;
+  padding: 6px 0;
   box-shadow: 0 1px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -102,7 +103,8 @@
 
 /* Sección derecha (70%) */
 .home-right {
-  flex: 7;
+  display: flex;
+  width: 70%;
   border-radius: 0;
   display: flex;
   justify-content: center;
@@ -123,7 +125,7 @@
   align-items: center;
   overflow-y: auto;
   padding-top: 10px;
-  gap: 10px;
+  gap: 5px;
 }
 
 /* Estilo scroll de mensajes */
@@ -286,7 +288,7 @@
 }
 
 .dark-mode .dark-toggle {
-  background-color: white;
+  background-color: var(--border-color);
 }
 
 .circle {

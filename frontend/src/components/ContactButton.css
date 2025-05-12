@@ -2,7 +2,8 @@
     display: flex;
     align-items: center;
     width: 90%;
-    height: auto;
+    height: 12vh;
+    min-height: 75px;
     padding: 10px;
     border: none;
     cursor: pointer;

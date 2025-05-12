@@ -15,7 +15,7 @@
 .dark-mode {
   --primary-color: #0A84FF;
   --secondary-color: #1E40AF;
-  --background-color: #0F172A;
+  --background-color: #02152B;
   --text-primary: #E2E8F0;
   --text-secondary: #94A3B8;
   --button-primary: #0A84FF;
@@ -83,6 +83,10 @@ button{
 p {
   color: var(--text-secondary);
   font-size: 15px;
+}
+
+.dark-mode p {
+  color: var(--text-primary);
 }
 
 button:hover {

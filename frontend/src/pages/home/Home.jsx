@@ -5,10 +5,12 @@ import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOut
 import { IonIcon } from '@ionic/react';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
+import Chat from '../../components/chat/chat.jsx';
 import './Home.css';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [activeContact, setActiveContact] = useState(null);
   const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
@@ -47,12 +49,14 @@ const Home = () => {
               <ContactButton
                 name="User Prueba 1"
                 image="/perfil.png"
-                lastMessage="Prueba de ultimo mensaje"
+                lastMessage="Prueba de último mensaje"
+                onClick={() => setActiveContact({ name: "User Prueba 1", image: "/perfil.png" })}
               />
               <ContactButton
                 name="User Prueba 2"
                 image="/perfil.png"
-                lastMessage="Prueba de ultimo mensaje2"
+                lastMessage="Prueba de último mensaje2"
+                onClick={() => setActiveContact({ name: "User Prueba 2", image: "/perfil.png" })}
               />
             </div>
             <div className='home-options'>
@@ -75,11 +79,16 @@ const Home = () => {
             </div>
           </div>
           <div className="home-right">
-            <img
-              src="./wallpaper.jpg"
-              alt="Chat Illustration"
-              className="home-image"
-            />
+            {activeContact ? (
+              // Si hay un contacto activo, muestra el chat
+              <Chat name={activeContact.name} image={activeContact.image} />
+            ) : (
+              <img
+                src="./wallpaper.jpg"
+                alt="Chat Illustration"
+                className="home-image"
+              />
+            )}
           </div>
         </>
       ) : (

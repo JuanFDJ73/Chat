@@ -1,12 +1,11 @@
-// src/components/ContactButton.jsx
 import React from 'react';
 import { IonIcon } from '@ionic/react';
 import { checkmarkDone } from 'ionicons/icons';
 import './ContactButton.css';
 
-const ContactButton = ({ name, image, lastMessage }) => {
+const ContactButton = ({ name, image, lastMessage, onClick  }) => {
   return (
-    <button className="contact">
+    <button className="contact" onClick={onClick}>
       <img src={image || '/perfil.png'} className="contact-image" />
       <div className="contact-info">
         <div className="contact-title">{name}</div>
