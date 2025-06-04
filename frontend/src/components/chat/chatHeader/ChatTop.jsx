@@ -5,18 +5,20 @@ import { ellipsisVerticalCircleOutline } from 'ionicons/icons';
 import { chevronBackOutline } from 'ionicons/icons';
 import './ChatTop.css';
 
-const ChatTop = ({ name, image }
-) => {
+const ChatTop = ({ name, image, onBack }) => {
     return (
         // <--ChatTop component-->
-        <div className="chat-top">
-
+         <div className="chat-top">
             <div className="chat-top-left">
-                <button className='back-button'>
+                <button className='back-button' onClick={onBack}>
                     <IonIcon className="icon" icon={chevronBackOutline} />
                 </button>
                 <button className="avatar-buttton-chat">
-                    <IonIcon className="avatar" icon={personCircleOutline} />
+                    {image ? (
+                        <img src={image} alt="avatar" className="avatar" />
+                    ) : (
+                        <IonIcon className="avatar" icon={personCircleOutline} />
+                    )}
                     <span>{name}</span>
                 </button>
             </div>

@@ -50,22 +50,26 @@ const Home = () => {
                 name="User Prueba 1"
                 // image="/perfil.png"
                 lastMessage="Prueba de último mensaje"
-                onClick={() => setActiveContact({ name: "User Prueba 1", image: "/perfil.png" })}
+                onClick={() => setActiveContact({ name: "User Prueba 1" })}
               />
               <ContactButton
                 name="User Prueba 2"
                 // image="/perfil.png"
                 lastMessage="Prueba de último mensaje2"
-                onClick={() => setActiveContact({ name: "User Prueba 2", image: "/perfil.png" })}
+                onClick={() => setActiveContact({ name: "User Prueba 2" })}
               />
             </div>
             <div className='home-options'>
               <button className="home-button user" onClick={goToProfile}>
-                <img
-                  src={userLogged.photoURL || './perfil.png'}
-                  alt="Avatar"
-                  className="home-avatar"
-                />
+                {userLogged.photoURL ? (
+                  <img
+                    src={userLogged.photoURL}
+                    alt="Avatar"
+                    className="home-avatar"
+                  />
+                ) : (
+                  <IonIcon className="home-avatar" icon={personAddOutline} />
+                )}
               </button>
               <button className="home-button add">
                 <IonIcon className="icon add" icon={personAddOutline} />
@@ -81,7 +85,7 @@ const Home = () => {
           <div className="home-right">
             {activeContact ? (
               // Si hay un contacto activo, muestra el chat
-              <Chat name={activeContact.name} image={activeContact.image} />
+              <Chat name={activeContact.name} image={activeContact.image} onBack={() => setActiveContact(null)} />
             ) : (
               <img
                 src="./wallpaper.jpg"
