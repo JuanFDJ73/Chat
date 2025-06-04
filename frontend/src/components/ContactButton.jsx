@@ -1,12 +1,17 @@
 import React from 'react';
 import { IonIcon } from '@ionic/react';
 import { checkmarkDone } from 'ionicons/icons';
+import { personCircleOutline } from 'ionicons/icons';
 import './ContactButton.css';
 
-const ContactButton = ({ name, image, lastMessage, onClick  }) => {
+const ContactButton = ({ name, image, lastMessage, onClick }) => {
   return (
     <button className="contact" onClick={onClick}>
-      <img src={image || '/perfil.png'} className="contact-image" />
+      {image ? (
+        <img src={image} className="contact-image" />
+      ) : (
+        <IonIcon className="avatar-button" icon={personCircleOutline} />
+      )}
       <div className="contact-info">
         <div className="contact-title">{name}</div>
         <div className="contact-last-message">

@@ -48,13 +48,13 @@ const Home = () => {
               {/* Contacto ejemplo */}
               <ContactButton
                 name="User Prueba 1"
-                image="/perfil.png"
+                // image="/perfil.png"
                 lastMessage="Prueba de último mensaje"
                 onClick={() => setActiveContact({ name: "User Prueba 1", image: "/perfil.png" })}
               />
               <ContactButton
                 name="User Prueba 2"
-                image="/perfil.png"
+                // image="/perfil.png"
                 lastMessage="Prueba de último mensaje2"
                 onClick={() => setActiveContact({ name: "User Prueba 2", image: "/perfil.png" })}
               />

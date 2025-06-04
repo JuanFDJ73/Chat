@@ -1,17 +1,25 @@
 import React from 'react';
 import { IonIcon } from '@ionic/react';
+import { personCircleOutline } from 'ionicons/icons';
 import { ellipsisVerticalCircleOutline } from 'ionicons/icons';
+import { chevronBackOutline } from 'ionicons/icons';
 import './ChatTop.css';
 
-const ChatTop = ({ name,image }
+const ChatTop = ({ name, image }
 ) => {
     return (
         // <--ChatTop component-->
         <div className="chat-top">
-            <button className="chat-top-left">
-                <img src={image} alt="Avatar" />
-                <span>{name}</span>
-            </button>
+
+            <div className="chat-top-left">
+                <button className='back-button'>
+                    <IonIcon className="icon" icon={chevronBackOutline} />
+                </button>
+                <button className="avatar-buttton-chat">
+                    <IonIcon className="avatar" icon={personCircleOutline} />
+                    <span>{name}</span>
+                </button>
+            </div>
             <div className="chat-top-right">
                 <IonIcon className="icon" icon={ellipsisVerticalCircleOutline} />
             </div>

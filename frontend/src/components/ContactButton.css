@@ -28,6 +28,17 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
+    color: white;
+}
+
+.dark-mode .contact-image {
+    color: white
+}
+
+.avatar-button{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
 }
 
 .contact-info {
