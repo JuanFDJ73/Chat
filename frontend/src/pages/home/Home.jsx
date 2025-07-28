@@ -5,7 +5,7 @@ import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOut
 import { IonIcon } from '@ionic/react';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
-import Chat from '../../components/chat/chat.jsx';
+import Chat from '../../components/chat/Chat.jsx';
 import './Home.css';
 
 const Home = () => {
