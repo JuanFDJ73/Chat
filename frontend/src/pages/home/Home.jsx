@@ -5,12 +5,14 @@ import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOut
 import { IonIcon } from '@ionic/react';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
-import Chat from '../../components/chat/chat.jsx';
+import Chat from '../../components/chat/Chat.jsx';
 import './Home.css';
+import AddContactModal from '../../components/AddContactModal.jsx';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeContact, setActiveContact] = useState(null);
+  const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
   const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
@@ -27,6 +29,17 @@ const Home = () => {
     userLogged ? navigate('/Profile') : navigate('/');
   };
 
+  const handleAddContact = () => {
+    console.log("Nuevo contacto agregado");
+  };
+
+  const openAddContactModal = () => {
+    setIsAddContactModalOpen(true);
+  };
+
+  const closeAddContactModal = () => {
+    setIsAddContactModalOpen(false);
+  };
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -71,7 +84,7 @@ const Home = () => {
                   <IonIcon className="home-avatar" icon={personAddOutline} />
                 )}
               </button>
-              <button className="home-button add">
+              <button className="home-button add" onClick={openAddContactModal}>
                 <IonIcon className="icon add" icon={personAddOutline} />
               </button>
               <button className="home-button settings" onClick={goToSettings}>
@@ -136,6 +149,13 @@ const Home = () => {
           </div>
         </div>
       )}
+
+      {/* Modal para agregar contacto */}
+      <AddContactModal
+        isOpen={isAddContactModalOpen}
+        onClose={closeAddContactModal}
+        onAddContact={handleAddContact}
+      />
     </div>
   );
 };
