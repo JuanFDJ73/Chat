@@ -51,6 +51,7 @@
     height: 45px;
     align-items: center;
     background: none;
+    display: none; /* Oculto por defecto en desktop */
 }
 
 .back-button:hover {
@@ -59,6 +60,13 @@
 
 .dark-mode .back-button:hover {
     background-color: var(--border-color);
+}
+
+/* Mostrar botón de retroceso en móvil */
+@media (max-width: 768px) {
+  .back-button {
+    display: flex !important;
+  }
 }
 
 .chat-top-right {

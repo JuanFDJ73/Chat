@@ -54,7 +54,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
                             <div className="user-info">
                                 <div className="user-avatar-placeholder">J</div>
                                 <div className="user-details">
-                                    <div className="user-name">Juan D</div>
+                                    <div className="user-name">Juan Duque</div>
                                     <div className="user-email">juan@example.com</div>
                                 </div>
                             </div>

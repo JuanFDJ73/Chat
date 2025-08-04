@@ -95,7 +95,7 @@ const Home = () => {
               </button>
             </div>
           </div>
-          <div className="home-right">
+          <div className={`home-right ${activeContact ? 'active' : ''}`}>
             {activeContact ? (
               // Si hay un contacto activo, muestra el chat
               <Chat name={activeContact.name} image={activeContact.image} onBack={() => setActiveContact(null)} />

@@ -227,3 +227,59 @@
     background-color: rgba(255, 68, 68, 0.1);
     color: #ff6b6b;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 0 10px;
+        padding: 20px;
+        max-height: 90vh;
+    }
+
+    .modal-header h3 {
+        font-size: 18px;
+    }
+
+    .search-input-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-result {
+        padding: 12px;
+    }
+
+    .user-avatar-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .user-name {
+        width: 25vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+    }
+
+    .user-email {
+        width: 25vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+    }
+
+    .add-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
