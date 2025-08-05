@@ -1,4 +1,4 @@
-import ChatTop from './chatHeader/chatTop';
+import ChatTop from './chatHeader/ChatTop';
 import ChatMessages from './chatMessages/ChatMessages';
 import ChatInput from './chatInput/ChatInput';
 import './Chat.css';
