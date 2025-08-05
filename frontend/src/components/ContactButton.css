@@ -86,3 +86,43 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact {
+        width: 95%;
+        height: 10vh;
+        min-height: 65px;
+        padding: 8px;
+        margin: 0 0 2% 0;
+    }
+
+    .contact-image {
+        width: 45px;
+        height: 45px;
+        margin-right: 12px;
+    }
+
+    .avatar-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .contact-title {
+        font-size: 0.9rem;
+    }
+
+    .contact-last-message {
+        font-size: 0.8rem;
+    }
+
+    .view {
+        width: 20px;
+        height: 12px;
+    }
+
+    .view img {
+        width: 14px;
+        height: 14px;
+    }
+}
