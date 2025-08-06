@@ -10,10 +10,22 @@ const useAuthStore = create((set) => {
         set({ isLoading: true });
 
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            set({
-                userLogged: user || null,
-                isLoading: false,
-            });
+            if (user) {
+                // Usar el UID real de Firebase
+                const userData = {
+                    ...user,
+                    uid: user.uid
+                };
+                set({
+                    userLogged: userData,
+                    isLoading: false,
+                });
+            } else {
+                set({
+                    userLogged: null,
+                    isLoading: false,
+                });
+            }
         });
         return unsubscribe;
     };

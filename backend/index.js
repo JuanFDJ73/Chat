@@ -8,6 +8,7 @@ import SocketHandler from './websocket/socketHandler.js';
 import userRoutes from './routes/UserRoutes.js';
 import conversationRoutes from './routes/ConversationRoutes.js';
 import MessageRoutes from './routes/MessageRoutes.js';
+import './database.js';
 
 dotenv.config();
 
@@ -15,13 +16,17 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', //Front
-    methods: ['GET', 'POST']
+    origin: ['http://localhost:5000'], // Agregar puertos del frontend
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5000'],
+  credentials: true
+}));
 app.use(logger('dev'));
 app.use(express.json());
 

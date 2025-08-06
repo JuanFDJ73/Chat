@@ -6,12 +6,12 @@ function arrayLimit(val) {
 
 const ConversationSchema = new mongoose.Schema({
   participants: { // IDs de los usuarios participantes
-    type: [Number],
+    type: [String], // IDs de Firebase
     validate: [arrayLimit, '{PATH} debe tener al menos 2 participantes']
   }, 
   lastMessage: {
     text: String,
-    sender: Number,
+    sender: String,
     timestamp: Date
   },
   createdAt: {

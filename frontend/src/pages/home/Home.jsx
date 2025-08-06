@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
+import socketService from '../../services/socket.js';
 import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/react';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
@@ -15,6 +16,19 @@ const Home = () => {
   const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
   const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
   const navigate = useNavigate();
+
+  // Inicializar Socket cuando el usuario esté logueado
+  useEffect(() => {
+    if (userLogged && userLogged.uid) {
+      socketService.connect(userLogged.uid);
+    }
+
+    return () => {
+      if (userLogged) {
+        socketService.disconnect();
+      }
+    };
+  }, [userLogged]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -41,6 +55,11 @@ const Home = () => {
     setIsAddContactModalOpen(false);
   };
 
+  // Simulando contactos con UIDs
+  const handleContactClick = (contactData) => {
+    setActiveContact(contactData);
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -58,18 +77,24 @@ const Home = () => {
               </div>
             </div>
             <div className="home-chat">
-              {/* Contacto ejemplo */}
+              {/* Contactos con UIDs simulados */}
               <ContactButton
                 name="User Prueba 1"
-                // image="/perfil.png"
                 lastMessage="Prueba de último mensaje"
-                onClick={() => setActiveContact({ name: "User Prueba 1" })}
+                onClick={() => handleContactClick({ 
+                  name: "User Prueba 1", 
+                  uid: 1001, // UID simulado
+                  image: null 
+                })}
               />
               <ContactButton
                 name="User Prueba 2"
-                // image="/perfil.png"
                 lastMessage="Prueba de último mensaje2"
-                onClick={() => setActiveContact({ name: "User Prueba 2" })}
+                onClick={() => handleContactClick({ 
+                  name: "User Prueba 2", 
+                  uid: 1002, // UID simulado
+                  image: null 
+                })}
               />
             </div>
             <div className='home-options'>
@@ -97,8 +122,13 @@ const Home = () => {
           </div>
           <div className={`home-right ${activeContact ? 'active' : ''}`}>
             {activeContact ? (
-              // Si hay un contacto activo, muestra el chat
-              <Chat name={activeContact.name} image={activeContact.image} onBack={() => setActiveContact(null)} />
+              // Si hay un contacto activo, mostrar el chat
+              <Chat
+                name={activeContact.name}
+                image={activeContact.image}
+                onBack={() => setActiveContact(null)}
+                activeContact={activeContact}
+              />
             ) : (
               <img
                 src="./wallpaper.jpg"
@@ -142,7 +172,7 @@ const Home = () => {
                   </svg>
                 </div>
                 <span className="gsi-material-button-contents">
-                  Sign in with Google
+                  Iniciar sesión con Google
                 </span>
               </div>
             </button>
