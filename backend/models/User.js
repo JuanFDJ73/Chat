@@ -1,8 +1,23 @@
 import mongoose from 'mongoose';
 
+const ContactSchema = new mongoose.Schema({
+  uid: {
+    type: String,
+    required: true
+  },
+  nickname: {
+    type: String,
+    default: null // Si es null, usa el displayName del contacto
+  },
+  addedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const UserSchema = new mongoose.Schema({
   uid: {
-    type: Number, // ID numérico único asignado al registrarse
+    type: String,
     unique: true,
     required: true
   },
@@ -16,10 +31,11 @@ const UserSchema = new mongoose.Schema({
     unique: true
   },
   photoURL: String,
+  contacts: [ContactSchema], // Lista de contactos con nicknames
   blockedUsers: {
-    type: [Number],
+    type: [String],
     index: true
-  }, // Lista de IDs de usuarios bloqueados
+  },
   createdAt: {
     type: Date,
     default: Date.now

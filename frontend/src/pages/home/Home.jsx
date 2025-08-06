@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { IonIcon } from '@ionic/react';
+import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
 import socketService from '../../services/socket.js';
-import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
-import { IonIcon } from '@ionic/react';
+import conversationsApi from '../../services/api/conversations.js'; // Agregar esta importación
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
+import AddContactModal from '../../components/AddContactModal.jsx';
 import Chat from '../../components/chat/Chat.jsx';
 import './Home.css';
-import AddContactModal from '../../components/AddContactModal.jsx';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [conversations, setConversations] = useState([]);
   const [activeContact, setActiveContact] = useState(null);
   const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
   const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
-  // Inicializar Socket cuando el usuario esté logueado
   useEffect(() => {
     if (userLogged && userLogged.uid) {
+      // Inicializar Socket cuando el usuario esté logueado
       socketService.connect(userLogged.uid);
+
+      // Obtener conversaciones del usuario
+      conversationsApi.getUserConversations(userLogged)
+        .then(data => {
+          console.log("Conversations fetched:", data);
+          setConversations(data);
+        })
+        .catch(error => {
+          console.error("Error al obtener conversaciones:", error);
+        });
     }
 
     return () => {
@@ -55,7 +67,6 @@ const Home = () => {
     setIsAddContactModalOpen(false);
   };
 
-  // Simulando contactos con UIDs
   const handleContactClick = (contactData) => {
     setActiveContact(contactData);
   };
@@ -77,25 +88,20 @@ const Home = () => {
               </div>
             </div>
             <div className="home-chat">
-              {/* Contactos con UIDs simulados */}
-              <ContactButton
-                name="User Prueba 1"
-                lastMessage="Prueba de último mensaje"
-                onClick={() => handleContactClick({ 
-                  name: "User Prueba 1", 
-                  uid: 1001, // UID simulado
-                  image: null 
-                })}
-              />
-              <ContactButton
-                name="User Prueba 2"
-                lastMessage="Prueba de último mensaje2"
-                onClick={() => handleContactClick({ 
-                  name: "User Prueba 2", 
-                  uid: 1002, // UID simulado
-                  image: null 
-                })}
-              />
+              {conversations.map(conv => (
+                <ContactButton
+                  key={conv._id}
+                  name={conv.contactInfo.displayName} // Usar el nombre personalizado
+                  lastMessage={conv.lastMessage?.text || 'Sin mensajes'}
+                  image={conv.contactInfo.photoURL}
+                  onClick={() => handleContactClick({
+                    name: conv.contactInfo.displayName,
+                    uid: conv.contactInfo.uid,
+                    image: conv.contactInfo.photoURL,
+                    hasNickname: conv.contactInfo.hasNickname
+                  })}
+                />
+              ))}
             </div>
             <div className='home-options'>
               <button className="home-button user" onClick={goToProfile}>
