@@ -7,7 +7,7 @@ const onlineUsers = new Map();
 
 export default function socketHandler(io) {
     io.on('connection', (socket) => {
-        console.log('🔌 Usuario conectado:', socket.id);
+        console.log('Usuario conectado');
 
         let currentUid = null;
 
@@ -22,7 +22,6 @@ export default function socketHandler(io) {
             }
             onlineUsers.get(uid).push(socket.id);
 
-            console.log(`Usuario ${uid} se unió a su sala`);
             io.emit('userOnline', uid); // Notificar a todos que este usuario está online
         });
 
@@ -86,7 +85,7 @@ export default function socketHandler(io) {
 
         // Al desconectarse
         socket.on('disconnect', () => {
-            console.log('Usuario desconectado:', socket.id);
+            console.log('Usuario desconectado');
 
             if (currentUid && onlineUsers.has(currentUid)) {
                 const sockets = onlineUsers.get(currentUid).filter(id => id !== socket.id);

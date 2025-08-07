@@ -1,37 +1,37 @@
 import mongoose from 'mongoose';
 
 const MessageSchema = new mongoose.Schema({
-  conversationId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Conversation',
-    required: true
-  },
   sender: {
-    type: Number,
+    type: String,
     required: true
   },
   receiver: {
-    type: Number,
+    type: String,
     required: true
   },
   content: {
     type: String,
     required: true
   },
+  conversationId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Conversation',
+    required: true
+  },
   timestamp: {
     type: Date,
     default: Date.now
   },
-  read: {
+  isRead: {
     type: Boolean,
     default: false
   },
-  type: {
+  messageType: {
     type: String,
     enum: ['text', 'image', 'file'],
     default: 'text'
   },
-  deleted: {
+  isDeleted: {
     type: Boolean,
     default: false
   }

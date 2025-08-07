@@ -3,8 +3,7 @@ import ChatMessages from './chatMessages/ChatMessages';
 import ChatInput from './chatInput/ChatInput';
 import './Chat.css';
 
-const Chat = ({ name, image, onBack }
-) => {
+const Chat = ({ name, image, onBack, activeContact }) => {
     return (
         <div className="chat-app">
             <ChatTop
@@ -13,7 +12,7 @@ const Chat = ({ name, image, onBack }
                 onBack={onBack}
             />
             <ChatMessages />
-            <ChatInput />
+            <ChatInput activeContact={activeContact} />
         </div>
     );
 };

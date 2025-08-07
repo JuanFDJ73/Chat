@@ -35,15 +35,15 @@ const Settings = () => {
     }
 
     const handlePrivacySettings = () => {
-        console.log('Configuración de privacidad');
+        navigate('/Privacy');
     }
 
     const handleAbout = () => {
-        console.log('Información de la aplicación');
+        navigate('/About');
     }
 
     const handleHelp = () => {
-        console.log('Centro de ayuda y soporte');
+        navigate('/Help');
     }
 
     return (

@@ -1,20 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { IonIcon } from '@ionic/react';
+import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
-import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
-import { IonIcon } from '@ionic/react';
+import socketService from '../../services/socket.js';
+import conversationsApi from '../../services/api/conversations.js';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
+import AddContactModal from '../../components/AddContactModal.jsx';
 import Chat from '../../components/chat/Chat.jsx';
 import './Home.css';
-import AddContactModal from '../../components/AddContactModal.jsx';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [conversations, setConversations] = useState([]);
   const [activeContact, setActiveContact] = useState(null);
   const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
   const { loginWithPopup, logout, userLogged, isLoading } = useAuthStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userLogged && userLogged.uid) {
+      // Inicializar Socket cuando el usuario esté logueado
+      socketService.connect(userLogged.uid);
+
+      // Obtener conversaciones del usuario
+      conversationsApi.getUserConversations(userLogged)
+        .then(data => {
+          console.log("Conversations fetched:", data);
+          setConversations(data);
+        })
+        .catch(error => {
+          console.error("Error al obtener conversaciones:", error);
+        });
+    }
+
+    return () => {
+      if (userLogged) {
+        socketService.disconnect();
+      }
+    };
+  }, [userLogged]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -41,6 +67,10 @@ const Home = () => {
     setIsAddContactModalOpen(false);
   };
 
+  const handleContactClick = (contactData) => {
+    setActiveContact(contactData);
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -58,19 +88,20 @@ const Home = () => {
               </div>
             </div>
             <div className="home-chat">
-              {/* Contacto ejemplo */}
-              <ContactButton
-                name="User Prueba 1"
-                // image="/perfil.png"
-                lastMessage="Prueba de último mensaje"
-                onClick={() => setActiveContact({ name: "User Prueba 1" })}
-              />
-              <ContactButton
-                name="User Prueba 2"
-                // image="/perfil.png"
-                lastMessage="Prueba de último mensaje2"
-                onClick={() => setActiveContact({ name: "User Prueba 2" })}
-              />
+              {conversations.map(conv => (
+                <ContactButton
+                  key={conv._id}
+                  name={conv.contactInfo.displayName} // Usar el nombre personalizado
+                  lastMessage={conv.lastMessage?.text || 'Sin mensajes'}
+                  image={conv.contactInfo.photoURL}
+                  onClick={() => handleContactClick({
+                    name: conv.contactInfo.displayName,
+                    uid: conv.contactInfo.uid,
+                    image: conv.contactInfo.photoURL,
+                    hasNickname: conv.contactInfo.hasNickname
+                  })}
+                />
+              ))}
             </div>
             <div className='home-options'>
               <button className="home-button user" onClick={goToProfile}>
@@ -97,8 +128,13 @@ const Home = () => {
           </div>
           <div className={`home-right ${activeContact ? 'active' : ''}`}>
             {activeContact ? (
-              // Si hay un contacto activo, muestra el chat
-              <Chat name={activeContact.name} image={activeContact.image} onBack={() => setActiveContact(null)} />
+              // Si hay un contacto activo, mostrar el chat
+              <Chat
+                name={activeContact.name}
+                image={activeContact.image}
+                onBack={() => setActiveContact(null)}
+                activeContact={activeContact}
+              />
             ) : (
               <img
                 src="./wallpaper.jpg"
@@ -142,7 +178,7 @@ const Home = () => {
                   </svg>
                 </div>
                 <span className="gsi-material-button-contents">
-                  Sign in with Google
+                  Iniciar sesión con Google
                 </span>
               </div>
             </button>
@@ -154,7 +190,7 @@ const Home = () => {
       <AddContactModal
         isOpen={isAddContactModalOpen}
         onClose={closeAddContactModal}
-        onAddContact={handleAddContact}
+        onContactAdded={handleAddContact} // Pasar la función de callback
       />
     </div>
   );
