@@ -7,7 +7,6 @@ import About from './pages/about/About.jsx';
 import Help from './pages/help/Help.jsx';
 import Privacy from './pages/privacy/Privacy.jsx';
 import ProtectedRoute from './utils/ProtectedRoute.jsx';
-import Chat from './components/chat/Chat.jsx';
 
 function App() {
   return (

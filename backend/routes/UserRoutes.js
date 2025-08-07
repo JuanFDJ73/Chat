@@ -27,6 +27,18 @@ router.get('/:uid', async (req, res) => {
   }
 });
 
+//Obtener un usuario por su email
+router.get('/email/:email', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al buscar el usuario' });
+  }
+});
+
 //Registrar un nuevo usuario (por ejemplo, al hacer login con Google por primera vez)
 router.post('/register', async (req, res) => {
   const { uid, displayName, email, photoURL } = req.body;
@@ -102,8 +114,9 @@ router.post('/:uid/contacts', async (req, res) => {
     user.contacts.push({ uid: contactUid, nickname });
     await user.save();
     
-    res.json({ message: 'Contacto agregado', contacts: user.contacts });
+    res.json({ message: 'Contacto agregado', contact: { uid: contactUid, nickname } });
   } catch (err) {
+    console.error('Error al agregar contacto:', err);
     res.status(500).json({ error: 'Error al agregar contacto' });
   }
 });

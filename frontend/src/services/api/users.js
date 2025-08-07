@@ -1,3 +1,11 @@
+const getUserByEmail = async (email) => {
+    const response = await fetch(`http://localhost:5000/api/users/email/${email}`);
+    if (!response.ok) {
+        throw new Error('Error al obtener el usuario');
+    }
+    return await response.json();
+};
+
 const updateContactNickname = async (userUid, contactUid, nickname) => {
     const response = await fetch(`http://localhost:5000/api/users/${userUid}/contacts/${contactUid}`, {
         method: 'PUT',
@@ -14,5 +22,6 @@ const updateContactNickname = async (userUid, contactUid, nickname) => {
 }
 
 export default {
+    getUserByEmail,
     updateContactNickname
 };

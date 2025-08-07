@@ -4,7 +4,7 @@ import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOut
 import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
 import socketService from '../../services/socket.js';
-import conversationsApi from '../../services/api/conversations.js'; // Agregar esta importación
+import conversationsApi from '../../services/api/conversations.js';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
 import AddContactModal from '../../components/AddContactModal.jsx';
@@ -190,7 +190,7 @@ const Home = () => {
       <AddContactModal
         isOpen={isAddContactModalOpen}
         onClose={closeAddContactModal}
-        onAddContact={handleAddContact}
+        onContactAdded={handleAddContact} // Pasar la función de callback
       />
     </div>
   );
