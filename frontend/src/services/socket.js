@@ -8,7 +8,7 @@ class SocketService {
 
     connect(userUid) {
         if (!this.socket) {
-            this.socket = io('http://localhost:5000', {
+            this.socket = io(import.meta.env.VITE_SOCKET_URL, {
                 transports: ['websocket'],
                 reconnection: true,
                 reconnectionAttempts: 5,

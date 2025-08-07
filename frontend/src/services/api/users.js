@@ -1,5 +1,5 @@
 const getUserByEmail = async (email) => {
-    const response = await fetch(`http://localhost:5000/api/users/email/${email}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/email/${email}`);
     if (!response.ok) {
         throw new Error('Error al obtener el usuario');
     }
@@ -7,7 +7,7 @@ const getUserByEmail = async (email) => {
 };
 
 const updateContactNickname = async (userUid, contactUid, nickname) => {
-    const response = await fetch(`http://localhost:5000/api/users/${userUid}/contacts/${contactUid}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userUid}/contacts/${contactUid}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
