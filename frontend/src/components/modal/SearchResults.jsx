@@ -1,6 +1,7 @@
 import React from "react";
 import { personAddOutline } from "ionicons/icons";
 import { IonIcon } from "@ionic/react";
+import './SearchResults.css';
 
 const SearchResults = ({ searchResults = [], handleAddContact }) => {
     return (

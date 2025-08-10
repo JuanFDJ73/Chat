@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  description: {
+    type: String,
+    default: null
+  },
   photoURL: String,
   contacts: [ContactSchema], // Lista de contactos con nicknames
   blockedUsers: {

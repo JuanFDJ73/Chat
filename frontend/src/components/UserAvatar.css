@@ -1,0 +1,49 @@
+.user-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color, #e0e0e0);
+    transition: transform 0.2s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.05);
+}
+
+/* Tamaños */
+.user-avatar.small {
+    width: 32px;
+    height: 32px;
+}
+
+.user-avatar.normal {
+    width: 48px;
+    height: 48px;
+}
+
+.user-avatar.large {
+    width: 64px;
+    height: 64px;
+}
+
+/* Cuando es un ícono */
+.user-avatar-icon {
+    color: var(--text-secondary, #666);
+    transition: color 0.2s ease;
+}
+
+.user-avatar-icon:hover {
+    color: var(--text-primary, #333);
+}
+
+/* Dark mode */
+.dark-mode .user-avatar {
+    border-color: var(--border-color);
+}
+
+.dark-mode .user-avatar-icon {
+    color: var(--text-secondary);
+}
+
+.dark-mode .user-avatar-icon:hover {
+    color: var(--text-primary);
+}

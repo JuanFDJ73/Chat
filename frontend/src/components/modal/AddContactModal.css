@@ -119,89 +119,6 @@
     font-style: italic;
 }
 
-.search-results {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.user-result {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-    border: 1px solid var(--border-color, #e0e0e0);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    background-color: var(--background-color, white);
-    transition: background-color 0.2s;
-}
-
-.user-result:hover {
-    background-color: var(--hover-color, #f9f9f9);
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.user-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-avatar-placeholder {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #98ccf9;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.user-details {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.user-name {
-    font-weight: 600;
-    color: var(--text-primary, #333);
-    font-size: 16px;
-}
-
-.user-email {
-    color: var(--text-secondary, #666);
-    font-size: 14px;
-}
-
-.add-button {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s;
-}
-
-.add-button:hover {
-    background-color: #45a049;
-}
-
 /* Dark mode */
 .dark-mode .modal-content {
     background-color: var(--background-color);
@@ -212,15 +129,6 @@
     background-color: var(--input-background);
     color: var(--text-primary);
     border-color: var(--border-color);
-}
-
-.dark-mode .user-result {
-    background-color: var(--background-color);
-    border-color: var(--border-color);
-}
-
-.dark-mode .user-result:hover {
-    background-color: var(--hover-color);
 }
 
 .dark-mode .error-message {
@@ -250,36 +158,5 @@
     .search-button {
         width: 100%;
         justify-content: center;
-    }
-
-    .user-result {
-        padding: 12px;
-    }
-
-    .user-avatar-placeholder {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-
-    .user-name {
-        width: 25vw;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 14px;
-    }
-
-    .user-email {
-        width: 25vw;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 12px;
-    }
-
-    .add-button {
-        padding: 6px 12px;
-        font-size: 12px;
     }
 }

@@ -12,7 +12,7 @@ const About = () => {
             <div className="About">
                 <div className="About-container">
                     <div>
-                        <button onClick={() => navigate('/')} className="">
+                        <button onClick={() => navigate('/settings')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
                         <h1>About</h1>
