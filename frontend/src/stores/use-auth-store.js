@@ -4,7 +4,32 @@ import { auth } from "../../firebase.config.js";
 
 const provider = new GoogleAuthProvider();
 
-const useAuthStore = create((set) => {
+const useAuthStore = create((set, get) => {
+    // Función para cargar perfil de BD
+    const loadUserProfile = async (uid) => {
+        try {
+            const userApi = (await import('../services/api/users.js')).default;
+            
+            const [displayNameData, profileImageData, descriptionData] = await Promise.all([
+                userApi.getDisplayName(uid).catch(() => ({ displayName: null })),
+                userApi.getProfileImage(uid).catch(() => ({ photoURL: null })),
+                userApi.getDescription(uid).catch(() => ({ description: null }))
+            ]);
+
+            const profile = {
+                displayName: displayNameData.displayName,
+                photoURL: profileImageData.photoURL,
+                description: descriptionData.description
+            };
+
+            set({ userProfile: profile });
+            return profile;
+        } catch (error) {
+            console.error('Error cargando perfil:', error);
+            return null;
+        }
+    };
+
     const observeAuthState = () => {
 
         set({ isLoading: true });
@@ -56,9 +81,13 @@ const useAuthStore = create((set) => {
                     userLogged: userData,
                     isLoading: false,
                 });
+
+                // Cargar perfil de la BD después de login
+                loadUserProfile(user.uid);
             } else {
                 set({
                     userLogged: null,
+                    userProfile: null,
                     isLoading: false,
                 });
             }
@@ -70,7 +99,18 @@ const useAuthStore = create((set) => {
 
     return {
         userLogged: null,
+        userProfile: null, // Agregar datos de perfil de la BD
         isLoading: true,
+
+        // Función para actualizar perfil local
+        updateUserProfile: (updates) => {
+            set((state) => ({
+                userProfile: { ...state.userProfile, ...updates }
+            }));
+        },
+
+        // Función para recargar perfil
+        loadUserProfile,
 
         loginWithPopup: async () => {
             try {
@@ -83,7 +123,7 @@ const useAuthStore = create((set) => {
         logout: async () => {
             try {
                 await signOut(auth);
-                set({ userLogged: null });
+                set({ userLogged: null, userProfile: null });
             } catch (error) {
                 console.error("Error during logout:", error.message);
             }

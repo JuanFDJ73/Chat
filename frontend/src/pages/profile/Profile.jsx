@@ -1,32 +1,314 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
-import { arrowBackCircle } from 'ionicons/icons';
-import './Profile.css';
+import { arrowBackCircle, personCircleOutline, createOutline, mailOutline, calendarOutline, chatboxEllipsesOutline, eyeOutline, cameraOutline, trashOutline } from 'ionicons/icons';
 import useAuthStore from '../../stores/use-auth-store';
-
+import userApi from '../../services/api/users';
+import './Profile.css';
 
 const Profile = () => {
     const navigate = useNavigate();
-    const { userLogged, isLoading } = useAuthStore();
+    const { userLogged, userProfile, loadUserProfile, updateUserProfile } = useAuthStore();
+    const [isEditing, setIsEditing] = useState(false);
+    const [displayName, setDisplayName] = useState('');
+    const [description, setDescription] = useState('');
+    const [currentPhotoURL, setCurrentPhotoURL] = useState('');
+    const [showAvatarOptions, setShowAvatarOptions] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadError, setUploadError] = useState('');
+    const avatarOptionsRef = useRef(null);
+
+    useEffect(() => {
+        const loadData = async () => {
+            if (!userLogged?.uid) return;
+
+            // Si ya tenemos el perfil en el store, usarlo
+            if (userProfile) {
+                setDisplayName(userProfile.displayName || userLogged.displayName || '');
+                setDescription(userProfile.description || '');
+                setCurrentPhotoURL(userProfile.photoURL || userLogged.photoURL || '');
+            } else {
+                // Si no, cargar desde la BD
+                await loadUserProfile(userLogged.uid);
+            }
+        };
+
+        loadData();
+    }, [userLogged, userProfile, loadUserProfile]);
+
+    // Actualizar estados cuando cambie el perfil del store
+    useEffect(() => {
+        if (userProfile) {
+            setDisplayName(userProfile.displayName || userLogged?.displayName || '');
+            setDescription(userProfile.description || '');
+            setCurrentPhotoURL(userProfile.photoURL || userLogged?.photoURL || '');
+        }
+    }, [userProfile, userLogged]);
+
+    // Cerrar dropdown al hacer clic fuera
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (avatarOptionsRef.current && !avatarOptionsRef.current.contains(event.target)) {
+                setShowAvatarOptions(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleEdit = async () => {
+        if (isEditing) {
+            try {
+                const nameInput = document.querySelector('.info-input[data-field="name"]');
+                const descriptionInput = document.querySelector('.info-input[data-field="description"]');
+
+                const newDisplayName = nameInput.value;
+                const newDescription = descriptionInput.value;
+
+                await Promise.all([
+                    userApi.updateDisplayName(userLogged.uid, newDisplayName),
+                    userApi.updateDescription(userLogged.uid, newDescription)
+                ]);
+
+                setDisplayName(newDisplayName);
+                setDescription(newDescription);
+
+                // Actualizar store
+                updateUserProfile({
+                    displayName: newDisplayName,
+                    description: newDescription
+                });
+
+                console.log('Perfil actualizado');
+            } catch (error) {
+                console.error('Error al actualizar perfil:', error);
+            }
+        }
+        setIsEditing(!isEditing);
+    };
+
+    const handleAvatarClick = () => {
+        if (!isUploading) {
+            setShowAvatarOptions(!showAvatarOptions);
+        }
+    };
+
+    const handleViewImage = () => {
+        if (currentPhotoURL) {
+            window.open(currentPhotoURL, '_blank');
+        }
+        setShowAvatarOptions(false);
+    };
+
+    const handleEditImage = async () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                setIsUploading(true);
+                setUploadError('');
+                setShowAvatarOptions(false);
+
+                try {
+                    console.log('Iniciando subida de imagen...');
+                    const result = await userApi.uploadProfileImage(userLogged.uid, file);
+                    
+                    const newPhotoURL = result.user.photoURL;
+                    
+                    // Actualizar estado local
+                    setCurrentPhotoURL(newPhotoURL);
+                    
+                    // Actualizar store
+                    updateUserProfile({ photoURL: newPhotoURL });
+                    
+                    console.log('Imagen subida exitosamente');
+                    
+                } catch (error) {
+                    console.error('Error al subir imagen:', error);
+                    setUploadError(error.message || 'Error al subir la imagen');
+                } finally {
+                    setIsUploading(false);
+                }
+            }
+        };
+        
+        input.click();
+    };
+
+    const handleDeleteImage = async () => {
+        if (!currentPhotoURL) return;
+
+        setIsUploading(true);
+        setUploadError('');
+        setShowAvatarOptions(false);
+
+        try {
+            await userApi.deleteProfileImage(userLogged.uid);
+            
+            // Actualizar estado local
+            setCurrentPhotoURL(userLogged.photoURL || ''); // Fallback a Firebase
+            
+            // Actualizar store
+            updateUserProfile({ photoURL: null });
+            
+            console.log('Imagen eliminada exitosamente');
+            
+        } catch (error) {
+            console.error('Error al eliminar imagen:', error);
+            setUploadError(error.message || 'Error al eliminar la imagen');
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    // Formatear fecha de creación
+    const formatDate = (dateString) => {
+        if (!dateString) return 'No disponible';
+        return new Date(dateString).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
 
     return (
-        <>
-            <div className="Profile">
-                <div className="Profile-container">
-                    <div>
-                        <button onClick={() => navigate('/')} className="">
-                            <IonIcon className="icon" icon={arrowBackCircle} />
+        <div className="profile">
+            <div className="profile-container">
+                <div className="profile-header">
+                    <button onClick={() => navigate('/')} className="back-button">
+                        <IonIcon className="back-icon" icon={arrowBackCircle} />
+                    </button>
+                    <h1 className="profile-title">Mi Perfil</h1>
+                </div>
+
+                <div className="profile-content">
+                    <div className="profile-avatar-section">
+                        <div className="profile-avatar-container" ref={avatarOptionsRef}>
+                            <div className={`avatar-wrapper ${isUploading ? 'uploading' : ''}`} onClick={handleAvatarClick}>
+                                {currentPhotoURL ? (
+                                    <img
+                                        src={currentPhotoURL}
+                                        alt="Avatar del usuario"
+                                        className="profile-avatar"
+                                    />
+                                ) : (
+                                    <IonIcon className="profile-avatar-placeholder" icon={personCircleOutline} />
+                                )}
+                                <div className="avatar-overlay">
+                                    {isUploading ? (
+                                        <div className="upload-spinner"></div>
+                                    ) : (
+                                        <IonIcon icon={cameraOutline} />
+                                    )}
+                                </div>
+                            </div>
+                            
+                            {showAvatarOptions && !isUploading && (
+                                <div className="avatar-options-dropdown">
+                                    {currentPhotoURL && (
+                                        <button className="avatar-option" onClick={handleViewImage}>
+                                            <IonIcon icon={eyeOutline} />
+                                            Ver imagen
+                                        </button>
+                                    )}
+                                    <button className="avatar-option" onClick={handleEditImage}>
+                                        <IonIcon icon={cameraOutline} />
+                                        {currentPhotoURL ? 'Cambiar imagen' : 'Agregar imagen'}
+                                    </button>
+                                    {currentPhotoURL && (
+                                        <button className="avatar-option delete" onClick={handleDeleteImage}>
+                                            <IonIcon icon={trashOutline} />
+                                            Eliminar imagen
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Mostrar estado de carga y errores */}
+                        {isUploading && (
+                            <p className="upload-status">Subiendo imagen...</p>
+                        )}
+                        {uploadError && (
+                            <p className="upload-error">{uploadError}</p>
+                        )}
+                        
+                        <button className="edit-button" onClick={handleEdit}>
+                            <IonIcon icon={createOutline} />
+                            {isEditing ? 'Guardar' : 'Editar'}
                         </button>
-                        <h1>Profile</h1>
-                        <p>This is the Profile page.</p>
                     </div>
-                    <div className="Profile-image">
-                        <img src={userLogged.photoURL || './perfil.png'} />
+
+                    <div className="profile-info">
+                        <div className="info-item">
+                            <div className="info-icon">
+                                <IonIcon icon={personCircleOutline} />
+                            </div>
+                            <div className="info-content">
+                                <label className="info-label">Nombre</label>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        defaultValue={displayName}
+                                        className="info-input"
+                                        data-field="name"
+                                    />
+                                ) : (
+                                    <span className="info-value">{displayName}</span>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <div className="info-icon">
+                                <IonIcon icon={chatboxEllipsesOutline} />
+                            </div>
+                            <div className="info-content">
+                                <label className="info-label">Descripción</label>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        defaultValue={description}
+                                        className="info-input"
+                                        data-field="description"
+                                    />
+                                ) : (
+                                    <span className="info-value">{description || 'Sin descripción'}</span>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <div className="info-icon">
+                                <IonIcon icon={mailOutline} />
+                            </div>
+                            <div className="info-content">
+                                <label className="info-label">Correo electrónico</label>
+                                <span className="info-value">{userLogged.email}</span>
+                            </div>
+                        </div>
+
+                        <div className="info-item">
+                            <div className="info-icon">
+                                <IonIcon icon={calendarOutline} />
+                            </div>
+                            <div className="info-content">
+                                <label className="info-label">Miembro desde</label>
+                                <span className="info-value">
+                                    {formatDate(userLogged.metadata?.creationTime)}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
