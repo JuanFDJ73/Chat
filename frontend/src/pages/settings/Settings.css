@@ -103,7 +103,7 @@
 
 .back-icon {
     font-size: 28px;
-    color: var(--text-color);
+    color: var(--text-primary);
     transition: color 0.3s ease;
 }
 
@@ -117,7 +117,7 @@
 .settings-title {
     font-size: 24px;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin: 0;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .settings-item:hover {
-    background-color: var(--hover-color);
+    background-color: var(--button-hover);
 }
 
 .settings-item-content {
@@ -215,7 +215,7 @@
 .settings-item-title {
     font-size: 16px;
     font-weight: 500;
-    color: var(--text-color);
+    color: var(--text-primary);
     margin: 0 0 4px 0;
 }
 
@@ -327,7 +327,7 @@ input:checked + .slider:before {
 }
 
 .nav-button:hover {
-    background-color: var(--hover-color);
+    background-color: var(--button-hover);
 }
 
 .nav-button ion-icon {

@@ -11,10 +11,15 @@
     z-index: 1000;
 }
 
+/* Dark mode para el overlay */
+.dark-mode .overlay {
+    background: rgba(0, 0, 0, 0.308);
+}
+
 .modal {
     display: flex;
     align-items: center;
-    background: #fff;
+    background: var(--background-color);
     padding: 24px;
     border-radius: 8px;
     position: relative;
@@ -31,14 +36,37 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+    color: var(--text-primary);
 }
 
 .acceptBtn {
     margin-top: 16px;
     padding: 8px 16px;
-    background: #007bff;
+    background: var(--button-color);
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.acceptBtn:hover {
+    background: var(--button-hover);
+}
+
+/* Estilos para títulos y texto */
+.modal h2 {
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+}
+
+.modal p {
+    color: var(--text-secondary);
+    margin: 0;
+    text-align: center;
 }

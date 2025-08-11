@@ -5,6 +5,7 @@ import { arrowBackCircle, personCircleOutline, createOutline, mailOutline, calen
 import useAuthStore from '../../stores/use-auth-store';
 import userApi from '../../services/api/users';
 import './Profile.css';
+import ViewImageModal from '../../components/modal/ViewImageModal';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Profile = () => {
     const [displayName, setDisplayName] = useState('');
     const [description, setDescription] = useState('');
     const [currentPhotoURL, setCurrentPhotoURL] = useState('');
+    const [showImageModal, setShowImageModal] = useState(false);
     const [showAvatarOptions, setShowAvatarOptions] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadError, setUploadError] = useState('');
@@ -26,7 +28,7 @@ const Profile = () => {
             if (userProfile) {
                 setDisplayName(userProfile.displayName || userLogged.displayName || '');
                 setDescription(userProfile.description || '');
-                setCurrentPhotoURL(userProfile.photoURL || userLogged.photoURL || '');
+                setCurrentPhotoURL(userProfile.photoURL || ''); // No usar Firebase como fallback
             } else {
                 // Si no, cargar desde la BD
                 await loadUserProfile(userLogged.uid);
@@ -41,7 +43,7 @@ const Profile = () => {
         if (userProfile) {
             setDisplayName(userProfile.displayName || userLogged?.displayName || '');
             setDescription(userProfile.description || '');
-            setCurrentPhotoURL(userProfile.photoURL || userLogged?.photoURL || '');
+            setCurrentPhotoURL(userProfile.photoURL || ''); // No usar Firebase como fallback
         }
     }, [userProfile, userLogged]);
 
@@ -98,7 +100,7 @@ const Profile = () => {
 
     const handleViewImage = () => {
         if (currentPhotoURL) {
-            window.open(currentPhotoURL, '_blank');
+            setShowImageModal(true);
         }
         setShowAvatarOptions(false);
     };
@@ -151,8 +153,7 @@ const Profile = () => {
         try {
             await userApi.deleteProfileImage(userLogged.uid);
             
-            // Actualizar estado local
-            setCurrentPhotoURL(userLogged.photoURL || ''); // Fallback a Firebase
+            setCurrentPhotoURL(''); // Dejar vacío para mostrar icono por defecto
             
             // Actualizar store
             updateUserProfile({ photoURL: null });
@@ -233,7 +234,7 @@ const Profile = () => {
 
                         {/* Mostrar estado de carga y errores */}
                         {isUploading && (
-                            <p className="upload-status">Subiendo imagen...</p>
+                            <p className="upload-status">Cambiando imagen...</p>
                         )}
                         {uploadError && (
                             <p className="upload-error">{uploadError}</p>
@@ -308,6 +309,13 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal para ver imagen */}
+            <ViewImageModal 
+                open={showImageModal} 
+                onClose={() => setShowImageModal(false)} 
+                imageUrl={currentPhotoURL} 
+            />
         </div>
     );
 };

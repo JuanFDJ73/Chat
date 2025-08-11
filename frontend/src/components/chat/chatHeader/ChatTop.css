@@ -46,25 +46,24 @@
     font-weight: bold;
 }
 
-.back-button{
+.back-button-chat{
     width: 30px;
     height: 45px;
     align-items: center;
     background: none;
-    display: none; /* Oculto por defecto en desktop */
 }
 
-.back-button:hover {
+.back-button-chat:hover {
     background-color: var(--border-color);
 }
 
-.dark-mode .back-button:hover {
+.dark-mode .back-button-chat:hover {
     background-color: var(--border-color);
 }
 
 /* Mostrar botón de retroceso en móvil */
 @media (max-width: 768px) {
-  .back-button {
+  .back-button-chat {
     display: flex !important;
   }
 }

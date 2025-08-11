@@ -50,7 +50,7 @@
 }
 
 .close-button:hover {
-    background-color: var(--hover-color, #f0f0f0);
+    background-color: var(--border-color);
 }
 
 .search-section {
