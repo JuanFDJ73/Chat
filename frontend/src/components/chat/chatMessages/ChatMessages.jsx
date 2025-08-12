@@ -1,6 +1,6 @@
 import React from 'react';
 import MessageSent from '../messages/MessageSent.jsx';
-import MessageReceived from '../messages/MessageReceived.JSX';
+import MessageReceived from '../messages/MessageReceived.jsx';
 import './ChatMessages.css';
 
 const ChatMessages = () => {
