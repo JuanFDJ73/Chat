@@ -75,30 +75,48 @@ const Home = () => {
         }
       };
 
-      // Función helper para obtener la imagen correcta
-      socketService.connect(userLogged.uid);
-
-      // Obtener conversaciones del usuario
-      conversationsApi.getUserConversations(userLogged)
-        .then(async (data) => {
+      // Función para cargar conversaciones
+      const loadConversations = async () => {
+        try {
+          const data = await conversationsApi.getUserConversations(userLogged);
           console.log("Conversations fetched:", data);
 
-          // Enriquecer con datos actualizados de la BD
           const enrichedConversations = await enrichConversationsWithUpdatedData(data);
           console.log("Conversations enriched:", enrichedConversations);
 
           setConversations(enrichedConversations);
-        })
-        .catch(error => {
+        } catch (error) {
           console.error("Error al obtener conversaciones:", error);
-        });
-    }
+        }
+      };
 
-    return () => {
-      if (userLogged) {
-        socketService.disconnect();
-      }
-    };
+      // Función helper para obtener la imagen correcta
+      socketService.connect(userLogged.uid);
+
+      // Cargar conversaciones inicialmente
+      loadConversations();
+
+      // Escuchar nuevos mensajes para actualizar la lista de conversaciones
+      const socket = socketService.connect(userLogged.uid);
+      
+      const handleMessageUpdate = (message) => {
+        console.log('Actualizando lista de conversaciones por nuevo mensaje:', message);
+        // Recargar conversaciones cuando llegue un nuevo mensaje
+        loadConversations();
+      };
+
+      socket.on('messageSent', handleMessageUpdate);
+      socket.on('receiveMessage', handleMessageUpdate);
+
+      return () => {
+        socket.off('messageSent', handleMessageUpdate);
+        socket.off('receiveMessage', handleMessageUpdate);
+        
+        if (userLogged) {
+          socketService.disconnect();
+        }
+      };
+    }
   }, [userLogged]);
 
   const toggleDarkMode = () => {
@@ -153,14 +171,16 @@ const Home = () => {
               {conversations.map(conv => (
                 <ContactButton
                   key={conv._id}
-                  name={conv.contactInfo.displayName} // Usar el nombre personalizado
-                  lastMessage={conv.lastMessage?.text || 'Sin mensajes'}
+                  name={conv.contactInfo.displayName}
+                  lastMessage={conv.lastMessage?.content || 'Sin mensajes'}
                   image={conv.contactInfo.photoURL}
+                  isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser || false}
                   onClick={() => handleContactClick({
                     name: conv.contactInfo.displayName,
                     uid: conv.contactInfo.uid,
                     image: conv.contactInfo.photoURL,
-                    hasNickname: conv.contactInfo.hasNickname
+                    hasNickname: conv.contactInfo.hasNickname,
+                    conversationId: conv._id
                   })}
                 />
               ))}
@@ -188,6 +208,7 @@ const Home = () => {
                 image={activeContact.image}
                 onBack={() => setActiveContact(null)}
                 activeContact={activeContact}
+                conversationId={activeContact.conversationId}
               />
             ) : (
               <img

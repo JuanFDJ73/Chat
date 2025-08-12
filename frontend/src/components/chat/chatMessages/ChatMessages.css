@@ -1,10 +1,20 @@
 .chat-messages {
     flex: 1;
+    position: relative;
     padding: 16px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.loading, .no-conversation, .no-messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: var(--text-secondary);
+    font-style: italic;
 }
 
 .options-button {

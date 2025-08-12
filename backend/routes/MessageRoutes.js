@@ -1,38 +1,26 @@
 import express from 'express';
-import Message from '../models/Message.js';
+import { getMessagesByConversation, getMessageById } from './MessageRoutes/GetMessage.routes.js';
+import { createMessage, markMessageAsRead } from './MessageRoutes/PostMessage.routes.js';
+import { deleteMessage, deleteMessagePermanently } from './MessageRoutes/DeleteMessage.routes.js';
 
 const router = express.Router();
 
-/**
- * Obtener todos los mensajes de una conversación
- */
-router.get('/:conversationId', async (req, res) => {
-  try {
-    const messages = await Message.find({
-      conversationId: req.params.conversationId
-    }).sort({ timestamp: 1 }); // del más antiguo al más nuevo
+// GET - Obtener mensajes de una conversación
+router.get('/:conversationId', getMessagesByConversation);
 
-    res.json(messages);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al obtener mensajes' });
-  }
-});
+// GET - Obtener un mensaje específico
+router.get('/single/:messageId', getMessageById);
 
-/**
- * Marcar un mensaje como leído
- */
-router.post('/read/:messageId', async (req, res) => {
-  try {
-    const message = await Message.findByIdAndUpdate(
-      req.params.messageId,
-      { read: true },
-      { new: true }
-    );
+// POST - Crear nuevo mensaje
+router.post('/', createMessage);
 
-    res.json(message);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al marcar como leído' });
-  }
-});
+// POST - Marcar mensaje como leído
+router.post('/read/:messageId', markMessageAsRead);
+
+// DELETE - Eliminar mensaje (soft delete)
+router.delete('/:messageId', deleteMessage);
+
+// DELETE - Eliminar mensaje permanentemente
+router.delete('/permanent/:messageId', deleteMessagePermanently);
 
 export default router;

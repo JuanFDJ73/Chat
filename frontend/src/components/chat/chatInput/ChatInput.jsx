@@ -3,21 +3,21 @@ import socketService from '../../../services/socket';
 import useAuthStore from '../../../stores/use-auth-store';
 import './ChatInput.css';
 
-const ChatInput = ({ activeContact }) => {
+const ChatInput = ({ activeContact, conversationId }) => {
     const [message, setMessage] = useState('');
     const { userLogged } = useAuthStore();
 
     const handleSendMessage = (e) => {
         e.preventDefault();
 
-        if (!message.trim() || !activeContact || !userLogged) {
+        if (!message.trim() || !activeContact || !userLogged || !conversationId) {
             return;
         }
 
         const messageData = {
             sender: userLogged.uid,
-            receiver: activeContact.uid, //UID del contacto activo
-            timestamp: new Date().toISOString(),
+            receiver: activeContact.uid,
+            conversationId: conversationId,
             content: message.trim(),
         };
 
