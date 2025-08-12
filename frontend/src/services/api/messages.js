@@ -32,6 +32,23 @@ const sendMessage = async (messageData) => {
     }
 };
 
+const deleteMessage = async (messageId) => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar mensaje');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        throw error;
+    }
+};
+
 const markMessageAsRead = async (messageId) => {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/read/${messageId}`, {
@@ -52,5 +69,6 @@ const markMessageAsRead = async (messageId) => {
 export default {
     getConversationMessages,
     sendMessage,
+    deleteMessage,
     markMessageAsRead,
 };

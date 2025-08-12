@@ -113,16 +113,18 @@ const ChatMessages = ({ conversationId }) => {
             ) : (
                 messages.map((message) => {
                     const isFromCurrentUser = message.sender === userLogged?.uid;
-                    
+                    console.log("Rendering message:", message, "From current user:", isFromCurrentUser);
                     return isFromCurrentUser ? (
                         <MessageSent
                             key={message._id}
+                            _id={message._id}
                             message={message.content}
                             timestamp={formatTimestamp(message.timestamp)}
                         />
                     ) : (
                         <MessageReceived
                             key={message._id}
+                            _id={message._id}
                             message={message.content}
                             timestamp={formatTimestamp(message.timestamp)}
                         />
