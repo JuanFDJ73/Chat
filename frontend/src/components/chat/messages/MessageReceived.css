@@ -1,0 +1,32 @@
+.message-received {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    position: relative;
+    word-wrap: break-word;
+    align-self: flex-start;
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.message-received p {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.message-received .timestamp {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+
+.received {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
