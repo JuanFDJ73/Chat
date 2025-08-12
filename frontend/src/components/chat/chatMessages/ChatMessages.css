@@ -1,5 +1,6 @@
 .chat-messages {
     flex: 1;
+    position: relative;
     padding: 16px;
     overflow-y: auto;
     display: flex;
@@ -7,40 +8,42 @@
     gap: 10px;
 }
 
-.message {
-    max-width: 70%;
-    padding: 10px 14px;
-    border-radius: 12px;
-    position: relative;
-    word-wrap: break-word;
-}
-
-.message p {
-    margin: 0;
-    color: var(--text-primary);
-}
-
-.message .timestamp {
-    font-size: 10px;
+.loading, .no-conversation, .no-messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     color: var(--text-secondary);
-    margin-top: 4px;
-    display: block;
-    text-align: right;
+    font-style: italic;
 }
 
-.message.sent {
-    align-self: flex-end;
-    background-color: #98ccf9;
-    color: white;
+.options-button {
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.45s ease;
 }
 
-.dark-mode .message.sent {
-    background-color: #4A7DA4;
-    color: white;
+.options-button:hover{
+    background-color: #ebebeb;
 }
 
-.message.received {
-    align-self: flex-start;
-    background-color: var(--border-color);
-    color: var(--text-primary);
+
+.received:hover .options-button {
+    opacity: 1;
+}
+
+.sent:hover .options-button {
+    opacity: 1;
+}
+
+.dark-mode .options-button {
+    background-color: #1e293b;
+}
+
+.dark-mode .options-button:hover {
+    background-color: #1e293b;
+    opacity: 1;
 }

@@ -7,19 +7,12 @@ import './UserAvatar.css';
 const UserAvatar = ({ className = '', size = 'normal', onClick = null }) => {
     const { userLogged, userProfile } = useAuthStore();
     
-    // Función para obtener la imagen correcta con prioridad
     const getUserAvatar = () => {
-        // Prioridad: BD > Firebase > null
-        return userProfile?.photoURL || userLogged?.photoURL || null;
+        // Solo usar la imagen de la BD
+        return userProfile?.photoURL || null;
     };
 
     const avatarUrl = getUserAvatar();
-
-    const sizeClasses = {
-        small: 'w-8 h-8',
-        normal: 'w-12 h-12', 
-        large: 'w-16 h-16'
-    };
 
     if (avatarUrl) {
         return (

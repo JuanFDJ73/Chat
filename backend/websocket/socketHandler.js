@@ -36,7 +36,7 @@ export default function socketHandler(io) {
 
         // Envío de mensaje
         socket.on('sendMessage', async (data) => {
-            const { sender, receiver, content } = data;
+            const { sender, receiver, content, conversationId } = data;
 
             try {
                 const receiverUser = await User.findOne({ uid: receiver });
@@ -44,13 +44,19 @@ export default function socketHandler(io) {
                     return; // Bloqueado: no hacer nada
                 }
 
-                // Buscar o crear conversación
-                let conversation = await Conversation.findOne({
-                    participants: { $all: [sender, receiver], $size: 2 }
-                });
+                // Usar conversationId si se proporciona, sino buscar o crear conversación
+                let conversation;
+                if (conversationId) {
+                    conversation = await Conversation.findById(conversationId);
+                } else {
+                    conversation = await Conversation.findOne({
+                        participants: { $all: [sender, receiver], $size: 2 }
+                    });
 
-                if (!conversation) {
-                    conversation = new Conversation({ participants: [sender, receiver] });
+                    if (!conversation) {
+                        conversation = new Conversation({ participants: [sender, receiver] });
+                        await conversation.save();
+                    }
                 }
 
                 // Crear mensaje
@@ -65,17 +71,18 @@ export default function socketHandler(io) {
                 await newMessage.save();
 
                 // Actualizar conversación
-                conversation.lastMessage = {
-                    text: content,
-                    sender,
-                    timestamp: newMessage.timestamp
-                };
                 conversation.updatedAt = newMessage.timestamp;
                 await conversation.save();
 
+                // Crear objeto de mensaje con conversationId para el frontend
+                const messageToEmit = {
+                    ...newMessage.toObject(),
+                    conversationId: conversation._id.toString()
+                };
+
                 // Emitir al receptor y al emisor
-                io.to(receiver.toString()).emit('receiveMessage', newMessage);
-                io.to(sender.toString()).emit('messageSent', newMessage);
+                io.to(receiver.toString()).emit('receiveMessage', messageToEmit);
+                io.to(sender.toString()).emit('messageSent', messageToEmit);
 
             } catch (error) {
                 console.error('Error al enviar mensaje:', error);

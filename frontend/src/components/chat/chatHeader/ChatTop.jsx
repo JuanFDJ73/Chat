@@ -11,7 +11,7 @@ const ChatTop = ({ name, image, onBack }) => {
         // <--ChatTop component-->
          <div className="chat-top">
             <div className="chat-top-left">
-                <button className='back-button' onClick={onBack}>
+                <button className='back-button-chat' onClick={onBack}>
                     <IonIcon className="icon" icon={chevronBackOutline} />
                 </button>
                 <button className="avatar-buttton-chat">

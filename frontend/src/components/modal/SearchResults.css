@@ -15,9 +15,6 @@
     transition: background-color 0.2s;
 }
 
-.user-result:hover {
-    background-color: var(--hover-color, #f9f9f9);
-}
 
 .user-info {
     display: flex;
@@ -85,10 +82,6 @@
 .dark-mode .user-result {
     background-color: var(--background-color);
     border-color: var(--border-color);
-}
-
-.dark-mode .user-result:hover {
-    background-color: var(--hover-color);
 }
 
 /* Responsive Design */

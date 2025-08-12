@@ -1,0 +1,79 @@
+.view-image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.image-container {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button-image-modal {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    transition: background-color 0.2s ease;
+}
+
+.close-button-image-modal:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.modal-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .close-button-image-modal {
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+    
+    .modal-image {
+        max-width: 95vw;
+        max-height: 95vh;
+        border-radius: 6px;
+    }
+}
+
+/* Dark mode compatibility */
+.dark-mode .close-button-image-modal {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.dark-mode .close-button-image-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
