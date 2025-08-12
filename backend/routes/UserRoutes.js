@@ -141,18 +141,19 @@ router.put('/:uid/contacts/:contactUid', async (req, res) => {
   }
 });
 
-// Obtener conversaciones con nombres personalizados
+// Obtener conversaciones con nombres personalizados y último mensaje
 router.get('/:uid/conversations-with-names', async (req, res) => {
   try {
+    const Message = (await import('../models/Message.js')).default;
     const user = await User.findOne({ uid: req.params.uid });
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
 
     // Obtener conversaciones básicas
     const conversations = await Conversation.find({
       participants: req.params.uid
-    }).populate('lastMessage');
+    }).sort({ updatedAt: -1 });
 
-    // Enriquecer con información de contactos
+    // Enriquecer con información de contactos y último mensaje
     const enrichedConversations = await Promise.all(
       conversations.map(async (conv) => {
         const otherParticipantUid = conv.participants.find(p => p !== req.params.uid);
@@ -175,6 +176,11 @@ router.get('/:uid/conversations-with-names', async (req, res) => {
           }
         }
 
+        // Obtener último mensaje de la conversación
+        const lastMessage = await Message.findOne({
+          conversationId: conv._id
+        }).sort({ timestamp: -1 });
+
         return {
           ...conv.toObject(),
           contactInfo: {
@@ -182,7 +188,13 @@ router.get('/:uid/conversations-with-names', async (req, res) => {
             displayName,
             photoURL,
             hasNickname: userContact?.nickname ? true : false
-          }
+          },
+          lastMessage: lastMessage ? {
+            content: lastMessage.content,
+            timestamp: lastMessage.timestamp,
+            sender: lastMessage.sender,
+            isFromCurrentUser: lastMessage.sender === req.params.uid
+          } : null
         };
       })
     );
