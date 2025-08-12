@@ -1,67 +1,26 @@
 import express from 'express';
-import Message from '../models/Message.js';
-import Conversation from '../models/Conversation.js';
+import { getMessagesByConversation, getMessageById } from './MessageRoutes/GetMessage.routes.js';
+import { createMessage, markMessageAsRead } from './MessageRoutes/PostMessage.routes.js';
+import { deleteMessage, deleteMessagePermanently } from './MessageRoutes/DeleteMessage.routes.js';
 
 const router = express.Router();
 
-/**
- * Obtener todos los mensajes de una conversación
- */
-router.get('/:conversationId', async (req, res) => {
-  try {
-    const messages = await Message.find({
-      conversationId: req.params.conversationId
-    }).sort({ timestamp: 1 }); // del más antiguo al más nuevo
+// GET - Obtener mensajes de una conversación
+router.get('/:conversationId', getMessagesByConversation);
 
-    res.json(messages);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al obtener mensajes' });
-  }
-});
+// GET - Obtener un mensaje específico
+router.get('/single/:messageId', getMessageById);
 
-/**
- * Enviar un nuevo mensaje
- */
-router.post('/', async (req, res) => {
-  try {
-    const { sender, receiver, content, conversationId, messageType = 'text' } = req.body;
+// POST - Crear nuevo mensaje
+router.post('/', createMessage);
 
-    const message = new Message({
-      sender,
-      receiver,
-      content,
-      conversationId,
-      messageType
-    });
+// POST - Marcar mensaje como leído
+router.post('/read/:messageId', markMessageAsRead);
 
-    await message.save();
+// DELETE - Eliminar mensaje (soft delete)
+router.delete('/:messageId', deleteMessage);
 
-    // Actualizar la fecha de la conversación
-    await Conversation.findByIdAndUpdate(conversationId, {
-      updatedAt: new Date()
-    });
-
-    res.status(201).json(message);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al enviar mensaje' });
-  }
-});
-
-/**
- * Marcar un mensaje como leído
- */
-router.post('/read/:messageId', async (req, res) => {
-  try {
-    const message = await Message.findByIdAndUpdate(
-      req.params.messageId,
-      { isRead: true },
-      { new: true }
-    );
-
-    res.json(message);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al marcar como leído' });
-  }
-});
+// DELETE - Eliminar mensaje permanentemente
+router.delete('/permanent/:messageId', deleteMessagePermanently);
 
 export default router;
