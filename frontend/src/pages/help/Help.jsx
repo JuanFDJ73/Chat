@@ -12,7 +12,7 @@ const Help = () => {
             <div className="Help">
                 <div className="Help-container">
                     <div>
-                        <button onClick={() => navigate('/settings')} className="">
+                        <button onClick={() => navigate('/Settings')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
                         <h1>Help</h1>
