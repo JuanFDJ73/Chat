@@ -1,32 +1,34 @@
 :root {
-  --primary-color: #007BFF;
-  --secondary-color: #0056B3;
   --background-color: #F8FAFC;
   --text-primary: #1E293B;
   --text-secondary: #475569;
-  --button-primary: #007BFF;
+  --button-background: #CBD5E1;
   --button-hover: #0056B3;
-  --button-color: #b1b9c4;
-  /* --message-sent: #E3F2FD;
-  --message-received: #FFFFFF; */
+  --contact-button-background: #CBD5E1;
+  --contact-button-hover: #f0f0f0;
+  --icon-background: #CBD5E1;
+  --message-sent: #98ccf9;
+  --message-received: #CBD5E1;
+  --message-input: #F1F5F9;
   --border-color: #CBD5E1;
-  /* --background-hover: #f0f0f0; */
+  --spinner-color: #007BFF;
 }
 
 /* Modo oscuro */
 .dark-mode {
-  --primary-color: #0A84FF;
-  --secondary-color: #1E40AF;
   --background-color: #02152B;
   --text-primary: #E2E8F0;
   --text-secondary: #94A3B8;
-  --button-primary: #0A84FF;
+  --button-background: #475569;
   --button-hover: #2563EB;
-  --button-color: #475569;
-  /* --message-sent: #1E3A8A;
-  --message-received: #334155; */
+  --contact-button-background: #475569;
+  --contact-button-hover: #1e293b;
+  --icon-background: #475569;
+  --message-sent: #4A7DA4;
+  --message-received: #334155;
+  --message-input: #475569;
   --border-color: #475569;
-  /* --background-hover: #1a1f2a; */
+  --spinner-color: #0A84FF;
 }
 
 
@@ -75,7 +77,7 @@ button{
   outline: none;
   align-items: center;
   justify-content: center;
-  background-color: var(--border-color);
+  background-color: var(--button-background);
   color: var(--text-primary);
   border: none;
   padding: 10px 20px;
