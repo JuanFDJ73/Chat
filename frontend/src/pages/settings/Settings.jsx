@@ -17,12 +17,10 @@ import './Settings.css';
 
 const Settings = () => {
     const navigate = useNavigate();
-    const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
 
-    const handleNotificationToggle = (e) => {
-        setNotificationsEnabled(e.target.checked);
-        console.log(`Notificaciones ${e.target.checked ? 'activadas' : 'desactivadas'}`);
+    const handleNotification = () => {
+        navigate('/Notifications');
     }
 
     const toggleDarkMode = () => {
@@ -31,7 +29,7 @@ const Settings = () => {
     }
 
     const handleLanguage = () => {
-        console.log('Boton de idioma presionado');
+        navigate('/Language');
     }
 
     const handlePrivacySettings = () => {
@@ -59,7 +57,7 @@ const Settings = () => {
 
                     <div className="settings-list">
                         {/* Notificaciones */}
-                        <div className="settings-item">
+                        <div className="settings-item" onClick={handleNotification}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={notifications} />
@@ -68,16 +66,6 @@ const Settings = () => {
                                     <h3 className="settings-item-title">Notificaciones</h3>
                                     <p className="settings-item-subtitle">Recibir notificaciones de mensajes</p>
                                 </div>
-                            </div>
-                            <div className="settings-item-action">
-                                <label className="toggle-switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={notificationsEnabled}
-                                        onChange={handleNotificationToggle}
-                                    />
-                                    <span className="slider"></span>
-                                </label>
                             </div>
                         </div>
 
@@ -101,7 +89,7 @@ const Settings = () => {
                         </div>
 
                         {/* Idioma */}
-                        <div className="settings-item">
+                        <div className="settings-item" onClick={handleLanguage}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={language} />
@@ -119,7 +107,7 @@ const Settings = () => {
                         </div>
 
                         {/* Privacidad */}
-                        <div className="settings-item">
+                        <div className="settings-item" onClick={handlePrivacySettings}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={lockClosed} />
@@ -137,7 +125,7 @@ const Settings = () => {
                         </div>
 
                         {/* Acerca de */}
-                        <div className="settings-item">
+                        <div className="settings-item" onClick={handleAbout}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={informationCircle} />
@@ -155,7 +143,7 @@ const Settings = () => {
                         </div>
 
                         {/* Ayuda */}
-                        <div className="settings-item">
+                        <div className="settings-item" onClick={handleHelp}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={helpCircle} />
