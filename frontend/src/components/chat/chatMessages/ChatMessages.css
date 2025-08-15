@@ -40,10 +40,10 @@
 }
 
 .dark-mode .options-button {
-    background-color: #1e293b;
+    background-color: var(--contact-button-background);
 }
 
 .dark-mode .options-button:hover {
-    background-color: #1e293b;
+    background-color: var(--contact-button-hover);
     opacity: 1;
 }

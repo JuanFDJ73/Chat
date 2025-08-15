@@ -21,7 +21,7 @@
 }
 
 .not-found-button {
-  background-color: var(--primary-color);
+  background-color: var(--spinner-color);
   color: var(--text-primary);
   padding: 15px 30px;
   font-size: 1.2rem;
