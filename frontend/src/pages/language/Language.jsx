@@ -12,7 +12,7 @@ const Language = () => {
             <div className="language">
                 <div className="language-container">
                     <div>
-                        <button onClick={() => navigate('/settings')} className="">
+                        <button onClick={() => navigate('/Settings')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
                         <h1>Language</h1>

@@ -12,7 +12,7 @@ const Privacy = () => {
             <div className="Privacy">
                 <div className="Privacy-container">
                     <div>
-                        <button onClick={() => navigate('/settings')} className="">
+                        <button onClick={() => navigate('/Settings')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
                         <h1>Privacy</h1>

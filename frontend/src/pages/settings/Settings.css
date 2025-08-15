@@ -160,7 +160,7 @@
 }
 
 .settings-item:hover {
-    background-color: #1e293b;
+    background-color: var(--contact-button-hover);
 }
 
 .settings-item-content {

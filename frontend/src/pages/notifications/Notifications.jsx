@@ -12,7 +12,7 @@ const Notifications = () => {
             <div className="notifications">
                 <div className="notifications-container">
                     <div>
-                        <button onClick={() => navigate('/settings')} className="">
+                        <button onClick={() => navigate('/Settings')} className="">
                             <IonIcon className="icon" icon={arrowBackCircle} />
                         </button>
                         <h1>Notifications</h1>
