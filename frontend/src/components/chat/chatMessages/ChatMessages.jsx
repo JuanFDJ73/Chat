@@ -4,6 +4,8 @@ import MessageReceived from '../messages/MessageReceived.jsx';
 import messagesApi from '../../../services/api/messages.js';
 import socketService from '../../../services/socket.js';
 import useAuthStore from '../../../stores/use-auth-store.js';
+import { groupMessagesByDay } from '../../../utils/DateUtils';
+import DateSeparator from '../messages/DateSeparator';
 import './ChatMessages.css';
 
 const ChatMessages = ({ conversationId }) => {
@@ -90,6 +92,9 @@ const ChatMessages = ({ conversationId }) => {
         });
     };
 
+    // Agrupar mensajes por día
+    const groupedMessages = groupMessagesByDay(messages || []);
+
     if (loading) {
         return (
             <div className="chat-messages">
@@ -108,27 +113,38 @@ const ChatMessages = ({ conversationId }) => {
 
     return (
         <div className="chat-messages">
-            {messages.length === 0 ? (
+            {groupedMessages.length === 0 ? (
                 <div className="no-messages">No hay mensajes aún</div>
             ) : (
-                messages.map((message) => {
-                    const isFromCurrentUser = message.sender === userLogged?.uid;
-                    console.log("Rendering message:", message, "From current user:", isFromCurrentUser);
-                    return isFromCurrentUser ? (
-                        <MessageSent
-                            key={message._id}
-                            _id={message._id}
-                            message={message.content}
-                            timestamp={formatTimestamp(message.timestamp)}
-                        />
-                    ) : (
-                        <MessageReceived
-                            key={message._id}
-                            _id={message._id}
-                            message={message.content}
-                            timestamp={formatTimestamp(message.timestamp)}
-                        />
-                    );
+                groupedMessages.map((item, index) => {
+                    if (item.type === 'dateSeparator') {
+                        return (
+                            <DateSeparator 
+                                key={item.id} 
+                                date={item.date} 
+                            />
+                        );
+                    } else if (item.type === 'message') {
+                        // Usar _id del mensaje o fallback al índice
+                        const messageKey = item._id || item.id || `message-${index}`;
+                        const isCurrentUser = item.sender === userLogged?.id || item.senderId === userLogged?.id;
+                        
+                        console.log('Message key:', messageKey); // Debug
+                        console.log('Message object:', item); // Debug
+                        
+                        return isCurrentUser ? (
+                            <MessageSent 
+                                key={messageKey} 
+                                message={item} 
+                            />
+                        ) : (
+                            <MessageReceived 
+                                key={messageKey} 
+                                message={item} 
+                            />
+                        );
+                    }
+                    return null; // Para casos inesperados
                 })
             )}
             <div ref={messagesEndRef} />
