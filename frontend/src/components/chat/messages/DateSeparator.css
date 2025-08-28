@@ -1,0 +1,23 @@
+.date-separator {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.date-separator-line {
+    flex: 1;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+.date-separator-text {
+    margin: 0 15px;
+    padding: 5px 12px;
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    white-space: nowrap;
+}

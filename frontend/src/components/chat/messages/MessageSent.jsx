@@ -3,7 +3,7 @@ import { IonIcon } from '@ionic/react';
 import { ellipsisVerticalOutline, eyeOutline, trashOutline, copyOutline } from 'ionicons/icons';
 import './MessageSent.css';
 
-const MessageSent = ({ _id, message, timestamp }) => {
+const MessageSent = ({ message }) => {
     const [showMessagesOptions, setShowMessagesOptions] = useState(false);
     const optionsRef = useRef(null);
     const buttonRef = useRef(null);
@@ -23,14 +23,14 @@ const MessageSent = ({ _id, message, timestamp }) => {
         };
     }, []);
 
-    const handleOptionsClick = (_id) => {
-        console.log("Options clicked, Key:", _id);
+    const handleOptionsClick = () => {
+        console.log("Options clicked, ID:", message._id);
         setShowMessagesOptions(!showMessagesOptions);
     }
 
-    const handleCopyMessage = (_id) => {
-        console.log("Copy message clicked, Key:", _id);
-        navigator.clipboard.writeText(message);
+    const handleCopyMessage = () => {
+        console.log("Copy message clicked, ID:", message._id);
+        navigator.clipboard.writeText(message.content);
         setShowMessagesOptions(false);
     }
 
@@ -39,19 +39,26 @@ const MessageSent = ({ _id, message, timestamp }) => {
         setShowMessagesOptions(false);
     }
 
-    const handleDeleteMessage = (_id) => {
-        console.log("Delete message clicked, Key:", _id);
+    const handleDeleteMessage = () => {
+        console.log("Delete message clicked, ID:", message._id);
         setShowMessagesOptions(false);
     }
 
-    console.log("MessageSent component rendered with key:", _id);
-    
+    // Formatear el timestamp
+    const formatTime = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+    };
+
     return (
         <div className="sent">
             <div className="options-container" ref={optionsRef}>
                 <button 
                     className='options-button' 
-                    onClick={() => handleOptionsClick(_id)}
+                    onClick={handleOptionsClick}
                     ref={buttonRef}
                 >
                     <IonIcon className="icon" icon={ellipsisVerticalOutline} />
@@ -63,11 +70,11 @@ const MessageSent = ({ _id, message, timestamp }) => {
                             <IonIcon icon={eyeOutline} />
                             Info
                         </button>
-                        <button className="messages-option" onClick={() => handleCopyMessage(_id)}>
+                        <button className="messages-option" onClick={handleCopyMessage}>
                             <IonIcon icon={copyOutline} />
                             Copiar mensaje
                         </button>
-                        <button className="messages-option delete" onClick={() => handleDeleteMessage(_id)}>
+                        <button className="messages-option delete" onClick={handleDeleteMessage}>
                             <IonIcon icon={trashOutline} />
                             Eliminar mensaje
                         </button>
@@ -76,8 +83,8 @@ const MessageSent = ({ _id, message, timestamp }) => {
             </div>
             
             <div className="message-sent">
-                <p>{message}</p>
-                <span className="timestamp">{timestamp}</span>
+                <p>{message.content}</p>
+                <span className="timestamp">{formatTime(message.timestamp)}</span>
             </div>
         </div>
     );

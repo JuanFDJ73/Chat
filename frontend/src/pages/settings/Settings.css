@@ -279,7 +279,7 @@
 }
 
 .nav-button:hover {
-    background-color: var(--button-hover);
+    background-color: var(--border-color);
 }
 
 .nav-button ion-icon {

@@ -3,7 +3,7 @@ import { IonIcon } from '@ionic/react';
 import { ellipsisVerticalOutline, eyeOutline, trashOutline, copyOutline } from 'ionicons/icons';
 import './MessageReceived.css';
 
-const MessageReceived = ({ message, timestamp }) => {
+const MessageReceived = ({ message }) => {
     const [showMessagesOptions, setShowMessagesOptions] = useState(false);
     const optionsRef = useRef(null);
     const buttonRef = useRef(null);
@@ -44,11 +44,20 @@ const MessageReceived = ({ message, timestamp }) => {
         setShowMessagesOptions(false);
     }
 
+    // Formatear el timestamp
+    const formatTime = (timestamp) => {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+    };
+
     return (
         <div className="received">
             <div className="message-received">
-                <p>{message}</p>
-                <span className="timestamp">{timestamp}</span>
+                <p>{message.content}</p>
+                <span className="timestamp">{formatTime(message.timestamp)}</span>
             </div>
             
             <div className="options-container" ref={optionsRef}>
