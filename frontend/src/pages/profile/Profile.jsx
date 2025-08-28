@@ -4,11 +4,13 @@ import { IonIcon } from '@ionic/react';
 import { arrowBackCircle, personCircleOutline, createOutline, mailOutline, calendarOutline, chatboxEllipsesOutline, eyeOutline, cameraOutline, trashOutline } from 'ionicons/icons';
 import useAuthStore from '../../stores/use-auth-store';
 import userApi from '../../services/api/users';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
 import './Profile.css';
 import ViewImageModal from '../../components/modal/ViewImageModal';
 
 const Profile = () => {
     const navigate = useNavigate();
+    const { t, currentLanguage } = useLanguage();
     const { userLogged, userProfile, loadUserProfile, updateUserProfile } = useAuthStore();
     const [isEditing, setIsEditing] = useState(false);
     const [displayName, setDisplayName] = useState('');
@@ -170,8 +172,16 @@ const Profile = () => {
 
     // Formatear fecha de creación
     const formatDate = (dateString) => {
-        if (!dateString) return 'No disponible';
-        return new Date(dateString).toLocaleDateString('es-ES', {
+        if (!dateString) return t('notAvailable');
+        
+        const localeMap = {
+            'es': 'es-ES',
+            'en': 'en-US',
+            'fr': 'fr-FR',
+            'pt': 'pt-BR'
+        };
+        
+        return new Date(dateString).toLocaleDateString(localeMap[currentLanguage] || 'es-ES', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -185,7 +195,7 @@ const Profile = () => {
                     <button onClick={() => navigate('/')} className="back-button">
                         <IonIcon className="back-icon" icon={arrowBackCircle} />
                     </button>
-                    <h1 className="profile-title">Mi Perfil</h1>
+                    <h1 className="profile-title">{t('myProfile')}</h1>
                 </div>
 
                 <div className="profile-content">
@@ -195,7 +205,7 @@ const Profile = () => {
                                 {currentPhotoURL ? (
                                     <img
                                         src={currentPhotoURL}
-                                        alt="Avatar del usuario"
+                                        alt={t('userAvatar')}
                                         className="profile-avatar"
                                     />
                                 ) : (
@@ -215,17 +225,17 @@ const Profile = () => {
                                     {currentPhotoURL && (
                                         <button className="avatar-option" onClick={handleViewImage}>
                                             <IonIcon icon={eyeOutline} />
-                                            Ver imagen
+                                            {t('viewImage')}
                                         </button>
                                     )}
                                     <button className="avatar-option" onClick={handleEditImage}>
                                         <IonIcon icon={cameraOutline} />
-                                        {currentPhotoURL ? 'Cambiar imagen' : 'Agregar imagen'}
+                                        {currentPhotoURL ? t('changeImage') : t('addImage')}
                                     </button>
                                     {currentPhotoURL && (
                                         <button className="avatar-option delete" onClick={handleDeleteImage}>
                                             <IonIcon icon={trashOutline} />
-                                            Eliminar imagen
+                                            {t('deleteImage')}
                                         </button>
                                     )}
                                 </div>
@@ -234,7 +244,7 @@ const Profile = () => {
 
                         {/* Mostrar estado de carga y errores */}
                         {isUploading && (
-                            <p className="upload-status">Cambiando imagen...</p>
+                            <p className="upload-status">{t('changingImage')}</p>
                         )}
                         {uploadError && (
                             <p className="upload-error">{uploadError}</p>
@@ -242,7 +252,7 @@ const Profile = () => {
                         
                         <button className="edit-button" onClick={handleEdit}>
                             <IonIcon icon={createOutline} />
-                            {isEditing ? 'Guardar' : 'Editar'}
+                            {isEditing ? t('save') : t('edit')}
                         </button>
                     </div>
 
@@ -252,7 +262,7 @@ const Profile = () => {
                                 <IonIcon icon={personCircleOutline} />
                             </div>
                             <div className="info-content">
-                                <label className="info-label">Nombre</label>
+                                <label className="info-label">{t('name')}</label>
                                 {isEditing ? (
                                     <input
                                         type="text"
@@ -271,7 +281,7 @@ const Profile = () => {
                                 <IonIcon icon={chatboxEllipsesOutline} />
                             </div>
                             <div className="info-content">
-                                <label className="info-label">Descripción</label>
+                                <label className="info-label">{t('description')}</label>
                                 {isEditing ? (
                                     <input
                                         type="text"
@@ -280,7 +290,7 @@ const Profile = () => {
                                         data-field="description"
                                     />
                                 ) : (
-                                    <span className="info-value">{description || 'Sin descripción'}</span>
+                                    <span className="info-value">{description || t('noDescription')}</span>
                                 )}
                             </div>
                         </div>
@@ -290,7 +300,7 @@ const Profile = () => {
                                 <IonIcon icon={mailOutline} />
                             </div>
                             <div className="info-content">
-                                <label className="info-label">Correo electrónico</label>
+                                <label className="info-label">{t('email')}</label>
                                 <span className="info-value">{userLogged.email}</span>
                             </div>
                         </div>
@@ -300,7 +310,7 @@ const Profile = () => {
                                 <IonIcon icon={calendarOutline} />
                             </div>
                             <div className="info-content">
-                                <label className="info-label">Miembro desde</label>
+                                <label className="info-label">{t('memberSince')}</label>
                                 <span className="info-value">
                                     {formatDate(userLogged.metadata?.creationTime)}
                                 </span>

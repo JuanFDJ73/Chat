@@ -9,32 +9,35 @@ import Privacy from './pages/privacy/Privacy.jsx';
 import About from './pages/about/About.jsx';
 import Help from './pages/help/Help.jsx';
 import ProtectedRoute from './utils/ProtectedRoute.jsx';
+import { LanguageProvider } from './contexts/LanguageContext.jsx';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path='/About' element={<About />} />
-          <Route path='/Help' element={<Help />} />
-          <Route path='/Privacy' element={<Privacy />} />
-          <Route path='/Notifications' element={<Notifications />} />
-          <Route path='/Language' element={<Language />} />
-          <Route path='/Profile' element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
-          <Route path='/Settings' element={
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path='/About' element={<About />} />
+            <Route path='/Help' element={<Help />} />
+            <Route path='/Privacy' element={<Privacy />} />
+            <Route path='/Notifications' element={<Notifications />} />
+            <Route path='/Language' element={<Language />} />
+            <Route path='/Profile' element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path='/Settings' element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </LanguageProvider>
       <Analytics />
     </>
   );
