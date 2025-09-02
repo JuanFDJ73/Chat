@@ -104,7 +104,77 @@ const translations = {
     reactDescription: 'Frontend moderno con hooks y componentes funcionales',
     socketDescription: 'Comunicación en tiempo real para chat instantáneo',
     nodeDescription: 'Backend robusto con Express.js',
-    mongoDescription: 'Base de datos NoSQL para almacenamiento'
+    mongoDescription: 'Base de datos NoSQL para almacenamiento',
+
+    // Help Page
+    helpTitle: 'Centro de Ayuda',
+    frequentQuestions: 'Preguntas Frecuentes',
+    contactUs: 'Contáctanos',
+    sendFeedback: 'Enviar Comentarios',
+    termsConditions: 'Términos y Condiciones',
+    privacyPolicy: 'Política de Privacidad',
+    troubleshooting: 'Solución de problemas',
+    
+    // FAQ
+    faqQuestion1: '¿Cómo envío un mensaje?',
+    faqAnswer1: 'Selecciona un contacto de tu lista y escribe tu mensaje en la parte inferior de la pantalla.',
+    faqQuestion2: '¿Cómo agrego nuevos contactos?',
+    faqAnswer2: 'Ve a la página principal y haz clic en el botón "+" para buscar y agregar nuevos contactos.',
+    faqQuestion3: '¿Cómo cambio mi foto de perfil?',
+    faqAnswer3: 'Ve a tu perfil, haz clic en tu imagen actual y selecciona "Cambiar imagen".',
+    faqQuestion4: '¿Puedo usar la aplicación sin conexión?',
+    faqAnswer4: 'No, necesitas conexión a internet para enviar y recibir mensajes.',
+    
+    // Contact
+    contactEmail: 'juanfdj73@gmail.com',
+    contactSubject: 'Soporte - Chat App',
+    contactMessage: 'Hola, necesito ayuda con...',
+    openEmail: 'Abrir correo electrónico',
+    addToContacts: 'Agregar a contactos',
+    
+    // Feedback
+    feedbackTitle: 'Enviar comentarios',
+    feedbackDescription: 'Ayúdanos a mejorar la aplicación con tus sugerencias',
+    feedbackPlaceholder: 'Escribe tus comentarios aquí...',
+    sendFeedbackBtn: 'Enviar comentarios',
+    feedbackSent: 'Comentarios enviados correctamente',
+    
+    // Terms & Conditions
+    termsTitle: 'Términos y Condiciones',
+    termsContent1: 'Al usar esta aplicación, aceptas cumplir con estos términos y condiciones.',
+    termsContent2: 'Esta aplicación es un proyecto educativo y personal.',
+    termsContent3: 'No nos hacemos responsables por el mal uso de la aplicación.',
+    termsContent4: 'Los datos se almacenan de forma segura y no se comparten con terceros.',
+    
+    // Troubleshooting
+    troubleshootingTitle: 'Solución de problemas',
+    problem1: 'Los mensajes no se envían',
+    solution1: 'Verifica tu conexión a internet y vuelve a intentar.',
+    problem2: 'No puedo agregar contactos',
+    solution2: 'Asegúrate de escribir correctamente el email del contacto.',
+    problem3: 'La aplicación va lenta',
+    solution3: 'Cierra otras aplicaciones y verifica tu conexión.',
+
+    // Privacy Policy
+    privacyTitle: 'Política de Privacidad',
+    privacyContent1: 'Esta aplicación de chat es un proyecto educativo y personal. Tu privacidad es importante para nosotros.',
+    privacyContent2: 'Recopilamos únicamente la información necesaria para el funcionamiento de la aplicación: email, nombre de usuario y mensajes.',
+    privacyContent3: 'Los datos se almacenan de forma segura y encriptada. No compartimos tu información personal con terceros.',
+    privacyContent4: 'Tienes derecho a solicitar la eliminación de tus datos en cualquier momento contactando al desarrollador.',
+    privacyContent5: 'Los mensajes se almacenan temporalmente para permitir la sincronización entre dispositivos.',
+    privacyContent6: 'Utilizamos autenticación segura a través de Firebase para proteger tu cuenta.',
+    privacyContent7: 'No utilizamos cookies de seguimiento ni analizamos tu comportamiento para fines publicitarios.',
+    privacyContent8: 'Al usar esta aplicación, aceptas el tratamiento de tus datos según esta política de privacidad.',
+    
+    // Privacy Sections
+    dataCollection: 'Información que recopilamos',
+    dataSecurity: 'Seguridad de datos',
+    authentication: 'Autenticación',
+    messageStorage: 'Almacenamiento de mensajes',
+    noTracking: 'No seguimiento',
+    userRights: 'Tus derechos',
+    problem4: 'Si los problemas persisten',
+    solution4: 'Asegúrate de comunicarte con el soporte técnico.'
   },
   
   en: {
@@ -207,7 +277,78 @@ const translations = {
     reactDescription: 'Modern frontend with hooks and functional components',
     socketDescription: 'Real-time communication for instant chat',
     nodeDescription: 'Robust backend with Express.js',
-    mongoDescription: 'NoSQL database for storage'
+    mongoDescription: 'NoSQL database for storage',
+
+    // Help Page
+    helpTitle: 'Help Center',
+    frequentQuestions: 'Frequently Asked Questions',
+    contactUs: 'Contact Us',
+    sendFeedback: 'Send Feedback',
+    termsConditions: 'Terms and Conditions',
+    privacyPolicy: 'Privacy Policy',
+    troubleshooting: 'Troubleshooting',
+    
+    // FAQ
+    faqQuestion1: 'How do I send a message?',
+    faqAnswer1: 'Select a contact from your list and type your message at the bottom of the screen.',
+    faqQuestion2: 'How do I add new contacts?',
+    faqAnswer2: 'Go to the main page and click the "+" button to search and add new contacts.',
+    faqQuestion3: 'How do I change my profile picture?',
+    faqAnswer3: 'Go to your profile, click on your current image and select "Change image".',
+    faqQuestion4: 'Can I use the app offline?',
+    faqAnswer4: 'No, you need an internet connection to send and receive messages.',
+    
+    // Contact
+    contactEmail: 'juanfdj73@gmail.com',
+    contactSubject: 'Support - Chat App',
+    contactMessage: 'Hello, I need help with...',
+    openEmail: 'Open email',
+    addToContacts: 'Add to contacts',
+    
+    // Feedback
+    feedbackTitle: 'Send feedback',
+    feedbackDescription: 'Help us improve the app with your suggestions',
+    feedbackPlaceholder: 'Write your feedback here...',
+    sendFeedbackBtn: 'Send feedback',
+    feedbackSent: 'Feedback sent successfully',
+    
+    // Terms & Conditions
+    termsTitle: 'Terms and Conditions',
+    termsContent1: 'By using this application, you agree to comply with these terms and conditions.',
+    termsContent2: 'This application is an educational and personal project.',
+    termsContent3: 'We are not responsible for misuse of the application.',
+    termsContent4: 'Data is stored securely and not shared with third parties.',
+    
+    // Troubleshooting
+    troubleshootingTitle: 'Troubleshooting',
+    problem1: 'Messages are not sending',
+    solution1: 'Check your internet connection and try again.',
+    problem2: 'I cannot add contacts',
+    solution2: 'Make sure to correctly type the contact\'s email.',
+    problem3: 'The app is slow',
+    solution3: 'Close other apps and check your connection.',
+
+    // Privacy Policy
+    privacyTitle: 'Privacy Policy',
+    privacyContent1: 'This chat application is an educational and personal project. Your privacy is important to us.',
+    privacyContent2: 'We collect only the information necessary for the app to function: email, username, and messages.',
+    privacyContent3: 'Data is stored securely and encrypted. We do not share your personal information with third parties.',
+    privacyContent4: 'You have the right to request deletion of your data at any time by contacting the developer.',
+    privacyContent5: 'Messages are stored temporarily to allow synchronization between devices.',
+    privacyContent6: 'We use secure authentication through Firebase to protect your account.',
+    privacyContent7: 'We do not use tracking cookies or analyze your behavior for advertising purposes.',
+    privacyContent8: 'By using this application, you agree to the processing of your data according to this privacy policy.',
+    
+    // Privacy Sections
+    dataCollection: 'Information we collect',
+    dataSecurity: 'Data security',
+    authentication: 'Authentication',
+    messageStorage: 'Message storage',
+    noTracking: 'No tracking',
+    userRights: 'Your rights',
+    problem4: 'If the problems persist',
+    solution4: 'Make sure to contact support.'
+
   },
   
   fr: {
@@ -310,7 +451,78 @@ const translations = {
     reactDescription: 'Frontend moderne avec hooks et composants fonctionnels',
     socketDescription: 'Communication en temps réel pour chat instantané',
     nodeDescription: 'Backend robuste avec Express.js',
-    mongoDescription: 'Base de données NoSQL pour le stockage'
+    mongoDescription: 'Base de données NoSQL pour le stockage',
+
+    // Help Page
+    helpTitle: 'Centre d\'Aide',
+    frequentQuestions: 'Questions Fréquemment Posées',
+    contactUs: 'Nous Contacter',
+    sendFeedback: 'Envoyer des Commentaires',
+    termsConditions: 'Termes et Conditions',
+    privacyPolicy: 'Politique de Confidentialité',
+    troubleshooting: 'Dépannage',
+    
+    // FAQ
+    faqQuestion1: 'Comment envoyer un message ?',
+    faqAnswer1: 'Sélectionnez un contact dans votre liste et tapez votre message en bas de l\'écran.',
+    faqQuestion2: 'Comment ajouter de nouveaux contacts ?',
+    faqAnswer2: 'Allez sur la page principale et cliquez sur le bouton "+" pour rechercher et ajouter de nouveaux contacts.',
+    faqQuestion3: 'Comment changer ma photo de profil ?',
+    faqAnswer3: 'Allez dans votre profil, cliquez sur votre image actuelle et sélectionnez "Changer l\'image".',
+    faqQuestion4: 'Puis-je utiliser l\'application hors ligne ?',
+    faqAnswer4: 'Non, vous avez besoin d\'une connexion internet pour envoyer et recevoir des messages.',
+    
+    // Contact
+    contactEmail: 'juanfdj73@gmail.com',
+    contactSubject: 'Support - Chat App',
+    contactMessage: 'Bonjour, j\'ai besoin d\'aide avec...',
+    openEmail: 'Ouvrir l\'email',
+    addToContacts: 'Ajouter aux contacts',
+    
+    // Feedback
+    feedbackTitle: 'Envoyer des commentaires',
+    feedbackDescription: 'Aidez-nous à améliorer l\'application avec vos suggestions',
+    feedbackPlaceholder: 'Écrivez vos commentaires ici...',
+    sendFeedbackBtn: 'Envoyer les commentaires',
+    feedbackSent: 'Commentaires envoyés avec succès',
+    
+    // Terms & Conditions
+    termsTitle: 'Termes et Conditions',
+    termsContent1: 'En utilisant cette application, vous acceptez de respecter ces termes et conditions.',
+    termsContent2: 'Cette application est un projet éducatif et personnel.',
+    termsContent3: 'Nous ne sommes pas responsables de la mauvaise utilisation de l\'application.',
+    termsContent4: 'Les données sont stockées de manière sécurisée et ne sont pas partagées avec des tiers.',
+    
+
+    // Troubleshooting
+    troubleshootingTitle: 'Dépannage',
+    problem1: 'Les messages ne s\'envoient pas',
+    solution1: 'Vérifiez votre connexion internet et réessayez.',
+    problem2: 'Je ne peux pas ajouter de contacts',
+    solution2: 'Assurez-vous de taper correctement l\'email du contact.',
+    problem3: 'L\'application est lente',
+    solution3: 'Fermez d\'autres applications et vérifiez votre connexion.',
+
+    // Privacy Policy
+    privacyTitle: 'Politique de Confidentialité',
+    privacyContent1: 'Cette application de chat est un projet éducatif et personnel. Votre confidentialité est importante pour nous.',
+    privacyContent2: 'Nous collectons uniquement les informations nécessaires au fonctionnement de l\'application : email, nom d\'utilisateur et messages.',
+    privacyContent3: 'Les données sont stockées de manière sécurisée et cryptée. Nous ne partageons pas vos informations personnelles avec des tiers.',
+    privacyContent4: 'Vous avez le droit de demander la suppression de vos données à tout moment en contactant le développeur.',
+    privacyContent5: 'Les messages sont stockés temporairement pour permettre la synchronisation entre appareils.',
+    privacyContent6: 'Nous utilisons une authentification sécurisée via Firebase pour protéger votre compte.',
+    privacyContent7: 'Nous n\'utilisons pas de cookies de suivi ni n\'analysons votre comportement à des fins publicitaires.',
+    privacyContent8: 'En utilisant cette application, vous acceptez le traitement de vos données selon cette politique de confidentialité.',
+    
+    // Privacy Sections
+    dataCollection: 'Informations que nous collectons',
+    dataSecurity: 'Sécurité des données',
+    authentication: 'Authentification',
+    messageStorage: 'Stockage des messages',
+    noTracking: 'Aucun suivi',
+    userRights: 'Vos droits',
+    problem4: 'Si les problèmes persistent',
+    solution4: 'Assurez-vous de communiquer avec le support technique.'
   },
   
   pt: {
@@ -413,7 +625,77 @@ const translations = {
     reactDescription: 'Frontend moderno com hooks e componentes funcionais',
     socketDescription: 'Comunicação em tempo real para chat instantâneo',
     nodeDescription: 'Backend robusto com Express.js',
-    mongoDescription: 'Banco de dados NoSQL para armazenamento'
+    mongoDescription: 'Banco de dados NoSQL para armazenamento',
+
+    // Help Page
+    helpTitle: 'Central de Ajuda',
+    frequentQuestions: 'Perguntas Frequentes',
+    contactUs: 'Fale Conosco',
+    sendFeedback: 'Enviar Comentários',
+    termsConditions: 'Termos e Condições',
+    privacyPolicy: 'Política de Privacidade',
+    troubleshooting: 'Solução de problemas',
+    
+    // FAQ
+    faqQuestion1: 'Como envio uma mensagem?',
+    faqAnswer1: 'Selecione um contato da sua lista e digite sua mensagem na parte inferior da tela.',
+    faqQuestion2: 'Como adiciono novos contatos?',
+    faqAnswer2: 'Vá para a página principal e clique no botão "+" para buscar e adicionar novos contatos.',
+    faqQuestion3: 'Como altero minha foto de perfil?',
+    faqAnswer3: 'Vá para seu perfil, clique na sua imagem atual e selecione "Alterar imagem".',
+    faqQuestion4: 'Posso usar o aplicativo offline?',
+    faqAnswer4: 'Não, você precisa de conexão com a internet para enviar e receber mensagens.',
+    
+    // Contact
+    contactEmail: 'juanfdj73@gmail.com',
+    contactSubject: 'Suporte - Chat App',
+    contactMessage: 'Olá, preciso de ajuda com...',
+    openEmail: 'Abrir email',
+    addToContacts: 'Adicionar aos contatos',
+    
+    // Feedback
+    feedbackTitle: 'Enviar comentários',
+    feedbackDescription: 'Ajude-nos a melhorar o aplicativo com suas sugestões',
+    feedbackPlaceholder: 'Escreva seus comentários aqui...',
+    sendFeedbackBtn: 'Enviar comentários',
+    feedbackSent: 'Comentários enviados com sucesso',
+    
+    // Terms & Conditions
+    termsTitle: 'Termos e Condições',
+    termsContent1: 'Ao usar este aplicativo, você concorda em cumprir com estes termos e condições.',
+    termsContent2: 'Este aplicativo é um projeto educacional e pessoal.',
+    termsContent3: 'Não nos responsabilizamos pelo mau uso do aplicativo.',
+    termsContent4: 'Os dados são armazenados de forma segura e não são compartilhados com terceiros.',
+    
+    // Troubleshooting
+    troubleshootingTitle: 'Solução de problemas',
+    problem1: 'As mensagens não estão sendo enviadas',
+    solution1: 'Verifique sua conexão com a internet e tente novamente.',
+    problem2: 'Não consigo adicionar contatos',
+    solution2: 'Certifique-se de digitar corretamente o email do contato.',
+    problem3: 'O aplicativo está lento',
+    solution3: 'Feche outros aplicativos e verifique sua conexão.',
+
+    // Privacy Policy
+    privacyTitle: 'Política de Privacidade',
+    privacyContent1: 'Esta aplicação de chat é um projeto educacional e pessoal. Sua privacidade é importante para nós.',
+    privacyContent2: 'Coletamos apenas as informações necessárias para o funcionamento do aplicativo: email, nome de usuário e mensagens.',
+    privacyContent3: 'Os dados são armazenados de forma segura e criptografada. Não compartilhamos suas informações pessoais com terceiros.',
+    privacyContent4: 'Você tem o direito de solicitar a exclusão de seus dados a qualquer momento entrando em contato com o desenvolvedor.',
+    privacyContent5: 'As mensagens são armazenadas temporariamente para permitir sincronização entre dispositivos.',
+    privacyContent6: 'Utilizamos autenticação segura através do Firebase para proteger sua conta.',
+    privacyContent7: 'Não utilizamos cookies de rastreamento nem analisamos seu comportamento para fins publicitários.',
+    privacyContent8: 'Ao usar esta aplicação, você concorda com o tratamento de seus dados de acordo com esta política de privacidade.',
+    
+    // Privacy Sections
+    dataCollection: 'Informações que coletamos',
+    dataSecurity: 'Segurança de dados',
+    authentication: 'Autenticação',
+    messageStorage: 'Armazenamento de mensagens',
+    noTracking: 'Sem rastreamento',
+    userRights: 'Seus direitos',
+    problem4: 'Se os problemas persistirem',
+    solution4: 'Certifique-se de comunicar-se com o suporte técnico.'
   }
 };
 

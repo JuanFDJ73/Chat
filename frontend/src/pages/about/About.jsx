@@ -96,25 +96,23 @@ const About = () => {
                         </div>
                     </div>
 
-                    <div className="developer-info">
-                        <div className="developer-card">
-                            <div className="developer-avatar">
-                                <IonIcon icon={logoGithub} />
-                            </div>
-                            <div className="developer-details">
-                                <h3>{t('developedWithLove')} <IonIcon icon={heart} className="heart-icon" /></h3>
-                                <p>
-                                    {t('developerMessage')}
-                                </p>
-                                <a
-                                    href="https://github.com/JuanFDJ73"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="github-link"
-                                >
-                                    {t('viewGithub')}
-                                </a>
-                            </div>
+                    <div className="developer-card">
+                        <div className="developer-avatar">
+                            <IonIcon icon={logoGithub} />
+                        </div>
+                        <div className="developer-details">
+                            <h3>{t('developedWithLove')} <IonIcon icon={heart} className="heart-icon" /></h3>
+                            <p>
+                                {t('developerMessage')}
+                            </p>
+                            <a
+                                href="https://github.com/JuanFDJ73"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="github-link"
+                            >
+                                {t('viewGithub')}
+                            </a>
                         </div>
                     </div>
 
