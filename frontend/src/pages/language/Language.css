@@ -351,10 +351,6 @@
     font-weight: 500;
 }
 
-.settings-item:hover:not(.current) {
-    background: var(--button-background);
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .language {
