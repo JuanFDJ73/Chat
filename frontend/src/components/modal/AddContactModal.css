@@ -70,7 +70,7 @@
     border-radius: 8px;
     font-size: 14px;
     color: var(--text-primary);
-    background-color: var(--input-background);
+    background-color: var(--card-background);
     transition: border-color 0.2s;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .dark-mode .search-input {
-    background-color: var(--input-background);
+    background-color: var(--card-background);
     color: var(--text-primary);
     border-color: var(--border-color);
 }

@@ -124,6 +124,14 @@ const useAuthStore = create((set, get) => {
             try {
                 await signOut(auth);
                 set({ userLogged: null, userProfile: null });
+                
+                // Limpiar cache de conversaciones
+                try {
+                    const { clearCache } = await import('./use-conversations-store.js').then(m => m.default.getState());
+                    clearCache();
+                } catch (error) {
+                    console.warn('No se pudo limpiar cache de conversaciones:', error);
+                }
             } catch (error) {
                 console.error("Error during logout:", error.message);
             }

@@ -227,7 +227,7 @@
 
 .settings-item-subtitle {
     font-size: 14px;
-    color: var(--secondary-text-color);
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -284,7 +284,7 @@
 
 .nav-button ion-icon {
     font-size: 18px;
-    color: var(--secondary-text-color);
+    color: var(--text-secondary);
 }
 
 .settings-footer {
@@ -306,7 +306,7 @@
 
 .version-text {
     font-size: 14px;
-    color: var(--secondary-text-color);
+    color: var(--text-secondary);
     margin: 0;
 }
 
