@@ -2,7 +2,11 @@
 
 Una aplicación de chat en tiempo real moderna y completa, desarrollada como proyecto personal para demostrar habilidades en desarrollo full-stack y tecnologías web modernas.
 
-![Chat App Preview](frontend/public/chat.png)
+Login
+![Chat App preview-login](frontend/public/preview-login.png)
+
+App
+![Chat App preview-app](frontend/public/preview-app.png)
 
 ## 🚀 Características Principales
 
