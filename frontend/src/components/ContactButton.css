@@ -36,7 +36,7 @@
     color: white
 }
 
-.avatar-button{
+.avatar-button {
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -84,9 +84,11 @@
 }
 
 .last-message {
+    width: 20vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: start;
     margin: 0 0 0 5px;
 }
 
@@ -116,7 +118,14 @@
     }
 
     .contact-last-message {
+        width: 100%;
         font-size: 0.8rem;
+    }
+
+    .last-message {
+        width: 70vw;
+        font-size: 0.8rem;
+        margin: 0 0 0 3px;
     }
 
     .view {

@@ -3,9 +3,8 @@ import { IonIcon } from '@ionic/react';
 import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { useNavigate } from "react-router-dom";
 import useAuthStore from '../../stores/use-auth-store.js';
+import useConversationsStore from '../../stores/use-conversations-store.js';
 import socketService from '../../services/socket.js';
-import conversationsApi from '../../services/api/conversations.js';
-import userApi from '../../services/api/users.js';
 import LoadingSpinner from '../../components/LoadingSpinner.jsx';
 import ContactButton from '../../components/ContactButton.jsx';
 import AddContactModal from '../../components/modal/AddContactModal.jsx';
@@ -16,109 +15,70 @@ import AuthContainer from '../../components/auth/AuthContainer.jsx';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [conversations, setConversations] = useState([]);
   const [activeContact, setActiveContact] = useState(null);
   const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
-  const [contactDataCache, setContactDataCache] = useState(new Map()); // Cache para datos de contactos
+  
   const { loginWithPopup, logout, userLogged, userProfile, isLoading } = useAuthStore();
+  const { 
+    conversations, 
+    isLoading: conversationsLoading, 
+    loadConversations, 
+    updateLastMessage,
+    clearCache 
+  } = useConversationsStore();
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userLogged && userLogged.uid) {
-      // Función para enriquecer conversaciones con datos actualizados de la BD
-      const enrichConversationsWithUpdatedData = async (conversations) => {
-        try {
-          const enrichedConversations = await Promise.all(
-            conversations.map(async (conv) => {
-              try {
-                const contactUid = conv.contactInfo.uid;
-
-                // Verificar si ya tenemos datos en cache
-                if (contactDataCache.has(contactUid)) {
-                  const cachedData = contactDataCache.get(contactUid);
-                  return {
-                    ...conv,
-                    contactInfo: {
-                      ...conv.contactInfo,
-                      displayName: cachedData.displayName || conv.contactInfo.displayName,
-                      photoURL: cachedData.photoURL || conv.contactInfo.photoURL,
-                    }
-                  };
-                }
-
-                // Obtener datos actualizados del contacto desde la BD
-                const contactData = await userApi.getUserByUid(contactUid);
-
-                // Guardar en cache
-                setContactDataCache(prev => new Map(prev.set(contactUid, contactData)));
-
-                return {
-                  ...conv,
-                  contactInfo: {
-                    ...conv.contactInfo,
-                    // Usar datos de la BD si existen, sino mantener los originales
-                    displayName: contactData.displayName || conv.contactInfo.displayName,
-                    photoURL: contactData.photoURL || conv.contactInfo.photoURL,
-                  }
-                };
-              } catch (error) {
-                // Si hay error obteniendo datos del contacto, usar los originales
-                console.warn(`No se pudieron obtener datos actualizados para ${conv.contactInfo.uid}:`, error);
-                return conv;
-              }
-            })
-          );
-
-          return enrichedConversations;
-        } catch (error) {
-          console.error('Error enriqueciendo conversaciones:', error);
-          return conversations; // Retornar originales si hay error
-        }
-      };
-
-      // Función para cargar conversaciones
-      const loadConversations = async () => {
-        try {
-          const data = await conversationsApi.getUserConversations(userLogged);
-          console.log("Conversations fetched:", data);
-
-          const enrichedConversations = await enrichConversationsWithUpdatedData(data);
-          console.log("Conversations enriched:", enrichedConversations);
-
-          setConversations(enrichedConversations);
-        } catch (error) {
-          console.error("Error al obtener conversaciones:", error);
-        }
-      };
-
-      // Función helper para obtener la imagen correcta
+      // Conectar socket
       socketService.connect(userLogged.uid);
 
-      // Cargar conversaciones inicialmente
-      loadConversations();
+      // Cargar conversaciones usando el store (con cache automático)
+      loadConversations(userLogged);
 
       // Escuchar nuevos mensajes para actualizar la lista de conversaciones
       const socket = socketService.connect(userLogged.uid);
       
-      const handleMessageUpdate = (message) => {
-        console.log('Actualizando lista de conversaciones por nuevo mensaje:', message);
-        // Recargar conversaciones cuando llegue un nuevo mensaje
-        loadConversations();
+      const handleMessageSent = (message) => {
+        console.log('Mensaje enviado por mí:', message);
+        
+        // Cuando yo envío un mensaje, siempre es del usuario actual
+        if (message.conversationId) {
+          updateLastMessage(message.conversationId, {
+            content: message.content,
+            isFromCurrentUser: true, // Siempre true para mensajes enviados
+            timestamp: message.timestamp
+          });
+        }
       };
 
-      socket.on('messageSent', handleMessageUpdate);
-      socket.on('receiveMessage', handleMessageUpdate);
+      const handleMessageReceived = (message) => {
+        console.log('Mensaje recibido de otro usuario:', message);
+        
+        // Cuando recibo un mensaje, nunca es del usuario actual
+        if (message.conversationId) {
+          updateLastMessage(message.conversationId, {
+            content: message.content,
+            isFromCurrentUser: false, // Siempre false para mensajes recibidos
+            timestamp: message.timestamp
+          });
+        }
+      };
+
+      socket.on('messageSent', handleMessageSent);
+      socket.on('receiveMessage', handleMessageReceived);
 
       return () => {
-        socket.off('messageSent', handleMessageUpdate);
-        socket.off('receiveMessage', handleMessageUpdate);
+        socket.off('messageSent', handleMessageSent);
+        socket.off('receiveMessage', handleMessageReceived);
         
         if (userLogged) {
           socketService.disconnect();
         }
       };
     }
-  }, [userLogged]);
+  }, [userLogged, loadConversations, updateLastMessage]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -135,6 +95,8 @@ const Home = () => {
 
   const handleAddContact = () => {
     console.log("Nuevo contacto agregado");
+    // Invalidar cache para recargar conversaciones
+    loadConversations(userLogged, true);
   };
 
   const openAddContactModal = () => {
@@ -148,6 +110,13 @@ const Home = () => {
   const handleContactClick = (contactData) => {
     setActiveContact(contactData);
   };
+
+  // Limpiar cache cuando el usuario se deslogea
+  useEffect(() => {
+    if (!userLogged) {
+      clearCache();
+    }
+  }, [userLogged, clearCache]);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -166,25 +135,30 @@ const Home = () => {
               </div>
             </div>
             <div className="home-chat">
-              {conversations.length === 0 && (
+              {conversationsLoading && conversations.length === 0 ? (
+                <div className="conversations-loading">
+                  <div className="conversations-loading-spinner"></div>
+                </div>
+              ) : conversations.length === 0 ? (
                 <p className="no-conversations">No tienes conversaciones aún.</p>
+              ) : (
+                conversations.map(conv => (
+                  <ContactButton
+                    key={conv._id}
+                    name={conv.contactInfo.displayName}
+                    lastMessage={conv.lastMessage?.content || 'Sin mensajes'}
+                    image={conv.contactInfo.photoURL}
+                    isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser}
+                    onClick={() => handleContactClick({
+                      name: conv.contactInfo.displayName,
+                      uid: conv.contactInfo.uid,
+                      image: conv.contactInfo.photoURL,
+                      hasNickname: conv.contactInfo.hasNickname,
+                      conversationId: conv._id
+                    })}
+                  />
+                ))
               )}
-              {conversations.map(conv => (
-                <ContactButton
-                  key={conv._id}
-                  name={conv.contactInfo.displayName}
-                  lastMessage={conv.lastMessage?.content || 'Sin mensajes'}
-                  image={conv.contactInfo.photoURL}
-                  isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser || false}
-                  onClick={() => handleContactClick({
-                    name: conv.contactInfo.displayName,
-                    uid: conv.contactInfo.uid,
-                    image: conv.contactInfo.photoURL,
-                    hasNickname: conv.contactInfo.hasNickname,
-                    conversationId: conv._id
-                  })}
-                />
-              ))}
             </div>
             <div className='home-options'>
               <button className="home-button user" onClick={goToProfile}>

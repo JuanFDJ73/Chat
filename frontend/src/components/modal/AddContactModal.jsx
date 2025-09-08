@@ -6,6 +6,7 @@ import conversationsApi from '../../services/api/conversations.js';
 import SearchResults from './SearchResults.jsx';
 import MistakeModal from './MistakeModal.jsx';
 import useAuthStore from '../../stores/use-auth-store.js';
+import useConversationsStore from '../../stores/use-conversations-store.js';
 import './AddContactModal.css';
 
 const AddContactModal = ({ isOpen, onClose }) => {
@@ -14,6 +15,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { userLogged } = useAuthStore();
+    const { invalidateCache } = useConversationsStore();
 
     const handleSearch = async () => {
         try {
@@ -35,6 +37,9 @@ const AddContactModal = ({ isOpen, onClose }) => {
                 const conversation = await conversationsApi.createConversation(participants);
                 
                 console.log('Conversación creada:', conversation);
+                
+                // Invalidar cache para forzar recarga de conversaciones
+                invalidateCache();
                 
                 // Cerrar modal y limpiar datos
                 handleClose()

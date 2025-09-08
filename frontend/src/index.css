@@ -2,6 +2,7 @@
   --background-color: #F8FAFC;
   --text-primary: #1E293B;
   --text-secondary: #475569;
+  --text-color: #1E293B;
   --button-background: #CBD5E1;
   --button-hover: #0056B3;
   --contact-button-background: #CBD5E1;
@@ -12,6 +13,10 @@
   --message-input: #F1F5F9;
   --border-color: #CBD5E1;
   --spinner-color: #007BFF;
+  --primary-color: #007BFF;
+  --primary-dark: #0056B3;
+  --card-background: #FFFFFF;
+  --hover-color: #F1F5F9;
   --warning-color: #F59E0B;
   --success-color: #10B981;
   --disabled-color: #9CA3AF;
@@ -22,6 +27,7 @@
   --background-color: #02152B;
   --text-primary: #E2E8F0;
   --text-secondary: #94A3B8;
+  --text-color: #E2E8F0;
   --button-background: #475569;
   --button-hover: #2563EB;
   --contact-button-background: #475569;
@@ -32,6 +38,13 @@
   --message-input: #475569;
   --border-color: #475569;
   --spinner-color: #0A84FF;
+  --primary-color: #0A84FF;
+  --primary-dark: #0056B3;
+  --card-background: #1E293B;
+  --hover-color: #334155;
+  --warning-color: #F59E0B;
+  --success-color: #10B981;
+  --disabled-color: #64748B;
 }
 
 
@@ -65,11 +78,11 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--color-primary);
+  color: var(--text-primary);
 }
 
 a {
-  color: var(--color-secondary);
+  color: var(--primary-color);
   text-decoration: none;
 }
 

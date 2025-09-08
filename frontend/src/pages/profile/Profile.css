@@ -223,6 +223,61 @@
     border-bottom: 8px solid var(--background-color);
 }
 
+.edit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.edit-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.upload-status {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 0;
+}
+
+.upload-error {
+    font-size: 14px;
+    color: #ff4444;
+    text-align: center;
+    margin: 0;
+}
+
+.avatar-wrapper.uploading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.upload-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .profile-info {
     display: flex;
     flex-direction: column;

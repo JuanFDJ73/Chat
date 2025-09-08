@@ -1,23 +1,332 @@
-.Help {
+.help {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    background: var(--background-color);
 }
 
-.Help-container {
+.help-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 40%;
-    height: 80%;
-    border-radius: 10px;
+    max-width: 600px;
+    height: 90vh;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    background-color: var(--background-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
 }
 
-.dark-mode .Help-container {
-    box-shadow: 0 1px 2px 4px rgb(255 255 255 / 5%);
+.help-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
 }
+
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.back-icon {
+    font-size: 24px;
+}
+
+.help-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.help-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.help-section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.help-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.help-item:hover {
+    background: var(--hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.help-item-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.help-item-icon {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.chevron {
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+/* FAQ Styles */
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.faq-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.faq-question {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.faq-answer {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+
+
+/* Troubleshooting Styles */
+.troubleshooting-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.problem-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.problem-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--warning-color);
+}
+
+.solution-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Feedback Styles */
+.feedback-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feedback-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.feedback-textarea {
+    width: 90%;
+    min-height: 120px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-background);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.feedback-textarea:focus {
+    border-color: var(--primary-color);
+}
+
+.feedback-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+}
+
+.feedback-button:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.feedback-button:disabled {
+    background: var(--disabled-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.feedback-success {
+    padding: 12px;
+    background: var(--success-color);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Terms Styles */
+.terms-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.terms-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.terms-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 15px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.privacy-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.privacy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.privacy-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.2s;
+}
+
+.privacy-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.privacy-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.privacy-agreement {
+    border: 2px solid var(--primary-color);
+    background: linear-gradient(135deg, var(--card-background) 0%, var(--hover-color) 100%);
+}
+
+.agreement-text {
+    font-weight: 500;
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .help-container {
+        width: 95%;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .help-content {
+        padding: 15px;
+    }
+    
+    .help-title {
+        font-size: 20px;
+    }
+}
+
