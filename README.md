@@ -242,7 +242,7 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ## 👨‍💻 Autor
 
-**Juan Fernando Duque Jiménez**
+**Juan Fernando Duque Jojoa**
 - GitHub: [@JuanFDJ73](https://github.com/JuanFDJ73)
 - LinkedIn: [Juan Fernando Duque](https://linkedin.com/in/juanfdj73)
 
