@@ -16,7 +16,7 @@ const ContactButton = ({ name, image, lastMessage, onClick, isLastMessageFromCur
       <div className="contact-info">
         <div className="contact-title">{name}</div>
         <div className="contact-last-message">
-          {!isLastMessageFromCurrentUser && (
+          {isLastMessageFromCurrentUser && (
             <div className="view">
               <IonIcon className="icon check" icon={checkmarkDone} />
             </div>
