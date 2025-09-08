@@ -2,6 +2,8 @@
 
 Una aplicación de chat en tiempo real moderna y completa, desarrollada como proyecto personal para demostrar habilidades en desarrollo full-stack y tecnologías web modernas.
 
+Aplicación: https://chatproject-gold.vercel.app 
+
 Login
 ![Chat App preview-login](frontend/public/preview-login.png)
 
