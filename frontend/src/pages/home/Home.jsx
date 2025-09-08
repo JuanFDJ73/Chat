@@ -40,25 +40,38 @@ const Home = () => {
       // Escuchar nuevos mensajes para actualizar la lista de conversaciones
       const socket = socketService.connect(userLogged.uid);
       
-      const handleMessageUpdate = (message) => {
-        console.log('Actualizando conversación por nuevo mensaje:', message);
+      const handleMessageSent = (message) => {
+        console.log('Mensaje enviado por mí:', message);
         
-        // Actualizar el último mensaje en el store sin recargar todo
+        // Cuando yo envío un mensaje, siempre es del usuario actual
         if (message.conversationId) {
           updateLastMessage(message.conversationId, {
             content: message.content,
-            isFromCurrentUser: message.senderId === userLogged.uid,
+            isFromCurrentUser: true, // Siempre true para mensajes enviados
             timestamp: message.timestamp
           });
         }
       };
 
-      socket.on('messageSent', handleMessageUpdate);
-      socket.on('receiveMessage', handleMessageUpdate);
+      const handleMessageReceived = (message) => {
+        console.log('Mensaje recibido de otro usuario:', message);
+        
+        // Cuando recibo un mensaje, nunca es del usuario actual
+        if (message.conversationId) {
+          updateLastMessage(message.conversationId, {
+            content: message.content,
+            isFromCurrentUser: false, // Siempre false para mensajes recibidos
+            timestamp: message.timestamp
+          });
+        }
+      };
+
+      socket.on('messageSent', handleMessageSent);
+      socket.on('receiveMessage', handleMessageReceived);
 
       return () => {
-        socket.off('messageSent', handleMessageUpdate);
-        socket.off('receiveMessage', handleMessageUpdate);
+        socket.off('messageSent', handleMessageSent);
+        socket.off('receiveMessage', handleMessageReceived);
         
         if (userLogged) {
           socketService.disconnect();
@@ -135,7 +148,7 @@ const Home = () => {
                     name={conv.contactInfo.displayName}
                     lastMessage={conv.lastMessage?.content || 'Sin mensajes'}
                     image={conv.contactInfo.photoURL}
-                    isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser || false}
+                    isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser}
                     onClick={() => handleContactClick({
                       name: conv.contactInfo.displayName,
                       uid: conv.contactInfo.uid,

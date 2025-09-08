@@ -1,0 +1,230 @@
+.anonymous-warning-modal {
+    background: var(--background-color);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    animation: modalAppear 0.3s ease-out;
+}
+
+.anonymous-warning-modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.anonymous-warning-modal .modal-header h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: center;
+}
+
+.anonymous-warning-modal .warning-icon {
+    color: var(--warning-color);
+    font-size: 2rem;
+    position: absolute;
+    left: 24px;
+}
+
+.anonymous-warning-modal .close-button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 16px;
+}
+
+.anonymous-warning-modal .close-button:hover {
+    background: var(--button-background);
+    color: var(--text-primary);
+}
+
+.anonymous-warning-modal .modal-body {
+    padding: 24px;
+}
+
+.anonymous-warning-modal .warning-content {
+    text-align: center;
+}
+
+.anonymous-warning-modal .user-icon {
+    background: var(--warning-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+}
+
+.anonymous-warning-modal .warning-content h4 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+}
+
+.anonymous-warning-modal .warning-points {
+    text-align: left;
+    margin: 24px 0;
+}
+
+.anonymous-warning-modal .warning-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--warning-background, rgba(255, 149, 0, 0.1));
+    border-radius: 12px;
+    border-left: 4px solid var(--warning-color);
+}
+
+.anonymous-warning-modal .point-icon {
+    font-size: 1.2rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.anonymous-warning-modal .warning-point p {
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.anonymous-warning-modal .warning-point strong {
+    color: var(--warning-color);
+}
+
+.anonymous-warning-modal .recommendation {
+    background: var(--info-background, rgba(0, 122, 255, 0.1));
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    border-left: 4px solid var(--spinner-color);
+}
+
+.anonymous-warning-modal .recommendation p {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.anonymous-warning-modal .recommendation strong {
+    color: var(--spinner-color);
+}
+
+.anonymous-warning-modal .modal-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px 24px 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.anonymous-warning-modal .cancel-button {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.anonymous-warning-modal .cancel-button:hover {
+    background: var(--hover-background);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.anonymous-warning-modal .confirm-button {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--warning-color);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
+}
+
+.anonymous-warning-modal .confirm-button:hover {
+    background: var(--warning-color);
+    box-shadow: 0 6px 20px rgba(255, 149, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+.anonymous-warning-modal .confirm-button:active {
+    transform: translateY(0);
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .anonymous-warning-modal {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .anonymous-warning-modal .modal-header {
+        padding: 20px 20px 16px 20px;
+    }
+    
+    .anonymous-warning-modal .modal-body {
+        padding: 20px;
+    }
+    
+    .anonymous-warning-modal .modal-buttons {
+        padding: 16px 20px 20px 20px;
+        flex-direction: column;
+    }
+    
+    .anonymous-warning-modal .warning-point {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .anonymous-warning-modal .point-icon {
+        align-self: flex-start;
+    }
+}

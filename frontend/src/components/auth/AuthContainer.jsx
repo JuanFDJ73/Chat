@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from './AuthForm.jsx';
 import Register from './Register.jsx';
+import AnonymousWarningModal from '../modal/AnonymousWarningModal.jsx';
 import useAuthStore from '../../stores/use-auth-store.js';
 
 const AuthContainer = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
-    const { loginWithPopup } = useAuthStore();
+    const [showAnonymousWarning, setShowAnonymousWarning] = useState(false);
+    const { loginWithPopup, loginAnonymously } = useAuthStore();
     const navigate = useNavigate();
 
     const switchToRegister = () => {
@@ -47,14 +49,23 @@ const AuthContainer = () => {
         }
     };
 
-    const handleAnonymousLogin = () => {
+    const handleAnonymousLogin = async () => {
+        // Mostrar modal de advertencia antes del login
+        setShowAnonymousWarning(true);
+    };
+
+    const handleConfirmAnonymousLogin = async () => {
         try {
-            // Aquí iría la lógica de login anónimo
-            console.log('Login anónimo');
-            alert('Interfaz Login Anónimo en prueba');
+            setShowAnonymousWarning(false);
+            await loginAnonymously();
+            navigate('/');
         } catch (error) {
             console.error('Error en login anónimo:', error);
         }
+    };
+
+    const handleCloseAnonymousWarning = () => {
+        setShowAnonymousWarning(false);
     };
 
     return (
@@ -73,6 +84,12 @@ const AuthContainer = () => {
                     onSwitchToLogin={switchToLogin}
                 />
             )}
+
+            <AnonymousWarningModal
+                isOpen={showAnonymousWarning}
+                onClose={handleCloseAnonymousWarning}
+                onConfirm={handleConfirmAnonymousLogin}
+            />
         </>
     );
 };
