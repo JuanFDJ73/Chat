@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { create } from "zustand";
 import { auth } from "../../firebase.config.js";
 
@@ -53,8 +53,8 @@ const useAuthStore = create((set, get) => {
                         },
                         body: JSON.stringify({
                             uid: user.uid,
-                            displayName: user.displayName,
-                            email: user.email,
+                            displayName: user.displayName || `User_${user.uid.slice(-6)}`,
+                            email: user.email || `anonimo_${user.uid.slice(-8)}@local.com`,
                             photoURL: user.photoURL
                         })
                     });
@@ -117,6 +117,14 @@ const useAuthStore = create((set, get) => {
                 await signInWithPopup(auth, provider);
             } catch (error) {
                 console.error("Error during login with popup:", error.message);
+            }
+        },
+
+        loginAnonymously: async () => {
+            try {
+                await signInAnonymously(auth);
+            } catch (error) {
+                console.error("Error during anonymous login:", error.message);
             }
         },
 

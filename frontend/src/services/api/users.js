@@ -21,6 +21,24 @@ const getUserByEmail = async (email) => {
     return await response.json();
 };
 
+// Conseguir usuario por nombre de usuario (displayName)
+const getUserByDisplayName = async (displayName) => {
+    const response = await fetch(`${API_URL}/api/users/displayname/${displayName}`);
+    if (!response.ok) {
+        throw new Error('Error al obtener el usuario');
+    }
+    return await response.json();
+};
+
+// Buscar usuario por email o displayName
+const searchUser = async (searchTerm) => {
+    const response = await fetch(`${API_URL}/api/users/search/${searchTerm}`);
+    if (!response.ok) {
+        throw new Error('Error al buscar el usuario');
+    }
+    return await response.json();
+};
+
 // Actualizar apodo de contacto
 const updateContactNickname = async (userUid, contactUid, nickname) => {
     const response = await fetch(`${API_URL}/api/users/${userUid}/contacts/${contactUid}`, {
@@ -206,6 +224,8 @@ const deleteProfileImage = async (userUid) => {
 export default {
     getUserByUid,
     getUserByEmail,
+    getUserByDisplayName,
+    searchUser,
     updateContactNickname,
     getDisplayName,
     updateDisplayName,

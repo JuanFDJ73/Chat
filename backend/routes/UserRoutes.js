@@ -3,6 +3,8 @@ import {
   getAllUsers, 
   getUserByUid, 
   getUserByEmail, 
+  getUserByDisplayName,
+  searchUser,
   getConversationsWithNames, 
   getDisplayName, 
   getDescription, 
@@ -31,6 +33,8 @@ const router = express.Router();
 router.get('/', getAllUsers);
 router.get('/:uid', getUserByUid);
 router.get('/email/:email', getUserByEmail);
+router.get('/displayname/:displayName', getUserByDisplayName);
+router.get('/search/:searchTerm', searchUser);
 router.get('/:uid/conversations-with-names', getConversationsWithNames);
 router.get('/:uid/display-name', getDisplayName);
 router.get('/:uid/description', getDescription);

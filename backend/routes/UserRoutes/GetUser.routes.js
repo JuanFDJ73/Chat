@@ -42,6 +42,43 @@ export const getUserByEmail = async (req, res) => {
 };
 
 /**
+ * Obtener un usuario por su nombre de usuario (displayName)
+ */
+export const getUserByDisplayName = async (req, res) => {
+  try {
+    const user = await User.findOne({ displayName: req.params.displayName });
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al buscar el usuario' });
+  }
+};
+
+/**
+ * Buscar usuario por email o displayName
+ */
+export const searchUser = async (req, res) => {
+  try {
+    const searchTerm = req.params.searchTerm;
+    
+    // Buscar por email o displayName
+    const user = await User.findOne({
+      $or: [
+        { email: searchTerm },
+        { displayName: searchTerm }
+      ]
+    });
+    
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al buscar el usuario' });
+  }
+};
+
+/**
  * Obtener conversaciones con nombres personalizados y último mensaje
  */
 export const getConversationsWithNames = async (req, res) => {

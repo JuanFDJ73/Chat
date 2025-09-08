@@ -7,7 +7,7 @@ const SearchResults = ({ searchResults = [], handleAddContact }) => {
     return (
         <div className="search-results">
             {searchResults.map((user, idx) => (
-                <div className="user-result" key={user.email || idx}>
+                <div className="user-result" key={user.uid || idx}>
                     <div className="user-info">
                         <div className="user-avatar-placeholder">
                             {user.displayName?.[0] || "?"}

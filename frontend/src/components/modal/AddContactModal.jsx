@@ -17,7 +17,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
 
     const handleSearch = async () => {
         try {
-            const user = await userApi.getUserByEmail(searchValue);
+            const user = await userApi.searchUser(searchValue);
             setSearchResults([user]);
         } catch (error) {
             setErrorMessage("Usuario " + searchValue + " no encontrado");
@@ -88,8 +88,8 @@ const AddContactModal = ({ isOpen, onClose }) => {
                         <div className="search-section">
                             <div className="search-input-container">
                                 <input
-                                    type="email"
-                                    placeholder="Buscar por email..."
+                                    type="text"
+                                    placeholder="Buscar por email o nombre de usuario..."
                                     className="search-input"
                                     value={searchValue}
                                     onChange={(e) => setSearchValue(e.target.value)}
