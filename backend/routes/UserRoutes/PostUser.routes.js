@@ -10,12 +10,35 @@ export const registerUser = async (req, res) => {
     let user = await User.findOne({ uid });
 
     if (!user) {
-      user = new User({ uid, displayName, email, photoURL });
+      // Para usuarios anónimos, generar un displayName único si hay conflicto
+      let finalDisplayName = displayName;
+      
+      // Verificar si el displayName ya existe
+      const existingUser = await User.findOne({ displayName: finalDisplayName });
+      if (existingUser) {
+        // Si ya existe, agregar un número aleatorio al final
+        const randomSuffix = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+        finalDisplayName = `${displayName}_${randomSuffix}`;
+        
+        // Verificar una vez más por si acaso
+        const conflictUser = await User.findOne({ displayName: finalDisplayName });
+        if (conflictUser) {
+          finalDisplayName = `Usuario_${uid.slice(-6)}_${Date.now()}`;
+        }
+      }
+
+      user = new User({ 
+        uid, 
+        displayName: finalDisplayName, 
+        email, 
+        photoURL 
+      });
       await user.save();
     }
 
     res.status(201).json(user);
   } catch (err) {
+    console.error('Error al registrar usuario:', err);
     res.status(500).json({ error: 'Error al registrar usuario' });
   }
 };
@@ -121,6 +144,16 @@ export const updateDisplayName = async (req, res) => {
     const user = await User.findOne({ uid: req.params.uid });
 
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    // Verificar que el nuevo displayName no esté en uso por otro usuario
+    const existingUser = await User.findOne({ 
+      displayName: displayName, 
+      uid: { $ne: req.params.uid } 
+    });
+    
+    if (existingUser) {
+      return res.status(400).json({ error: 'Nombre de usuario ya está en uso' });
+    }
 
     user.displayName = displayName;
     await user.save();
