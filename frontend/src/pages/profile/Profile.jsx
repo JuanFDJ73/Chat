@@ -6,7 +6,7 @@ import useAuthStore from '@stores/use-auth-store';
 import userApi from '@services/api/users';
 import { useLanguage } from '@contexts/LanguageContext.jsx';
 import './Profile.css';
-import ViewImageModal from '@components/modal/ViewImageModal.jsx';
+import ViewImageModal from '@components/modal/profile/ViewImageModal.jsx';
 
 const Profile = () => {
     const navigate = useNavigate();

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { IonIcon } from '@ionic/react';
 import { sunnyOutline, moonOutline, logOutOutline, settingsOutline, personAddOutline } from 'ionicons/icons';
 import { useNavigate } from "react-router-dom";
-import useAuthStore from '../../stores/use-auth-store.js';
-import useConversationsStore from '../../stores/use-conversations-store.js';
-import socketService from '../../services/socket.js';
-import LoadingSpinner from '../../components/LoadingSpinner.jsx';
-import ContactButton from '../../components/ContactButton.jsx';
-import AddContactModal from '../../components/modal/AddContactModal.jsx';
-import Chat from '../../components/chat/Chat.jsx';
-import UserAvatar from '../../components/UserAvatar.jsx';
+import useAuthStore from '@stores/use-auth-store.js';
+import useConversationsStore from '@stores/use-conversations-store.js';
+import socketService from '@services/socket.js';
+import LoadingSpinner from '@components/LoadingSpinner.jsx';
+import ContactButton from '@components/ContactButton.jsx';
+import AddContactModal from '@components/modal/home/AddContactModal.jsx';
+import Chat from '@components/chat/Chat.jsx';
+import UserAvatar from '@components/UserAvatar.jsx';
 import './Home.css';
-import AuthContainer from '../../components/auth/AuthContainer.jsx';
+import AuthContainer from '@components/auth/AuthContainer.jsx';
 
 const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
