@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home/Home.jsx';
-import NotFound from './pages/not-found/NotFound.jsx';
-import Profile from './pages/profile/Profile.jsx';
-import Settings from './pages/settings/Settings.jsx';
-import Notifications from './pages/notifications/Notifications.jsx';
-import Language from './pages/language/Language.jsx';
-import Privacy from './pages/privacy/Privacy.jsx';
-import About from './pages/about/About.jsx';
-import Help from './pages/help/Help.jsx';
-import ProtectedRoute from './utils/ProtectedRoute.jsx';
-import { LanguageProvider } from './contexts/LanguageContext.jsx';
+import Home from '@pages/home/Home.jsx';
+import NotFound from '@pages/not-found/NotFound.jsx';
+import Profile from '@pages/profile/Profile.jsx';
+import Settings from '@pages/settings/Settings.jsx';
+import Notifications from '@pages/notifications/Notifications.jsx';
+import Language from '@pages/language/Language.jsx';
+import Privacy from '@pages/privacy/Privacy.jsx';
+import About from '@pages/about/About.jsx';
+import Help from '@pages/help/Help.jsx';
+import ProtectedRoute from '@utils/ProtectedRoute.jsx';
+import { LanguageProvider } from '@contexts/LanguageContext.jsx';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {

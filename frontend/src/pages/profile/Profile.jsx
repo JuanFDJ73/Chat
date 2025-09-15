@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import { arrowBackCircle, personCircleOutline, createOutline, mailOutline, calendarOutline, chatboxEllipsesOutline, eyeOutline, cameraOutline, trashOutline } from 'ionicons/icons';
-import useAuthStore from '../../stores/use-auth-store';
-import userApi from '../../services/api/users';
-import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import useAuthStore from '@stores/use-auth-store';
+import userApi from '@services/api/users';
+import { useLanguage } from '@contexts/LanguageContext.jsx';
 import './Profile.css';
-import ViewImageModal from '../../components/modal/ViewImageModal';
+import ViewImageModal from '@components/modal/ViewImageModal.jsx';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -321,7 +321,7 @@ const Profile = () => {
             </div>
 
             {/* Modal para ver imagen */}
-            <ViewImageModal 
+            <ViewImageModal
                 open={showImageModal} 
                 onClose={() => setShowImageModal(false)} 
                 imageUrl={currentPhotoURL} 

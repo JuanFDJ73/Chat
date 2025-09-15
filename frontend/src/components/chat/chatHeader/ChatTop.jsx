@@ -3,9 +3,9 @@ import { IonIcon } from '@ionic/react';
 import { personCircleOutline } from 'ionicons/icons';
 import { ellipsisVerticalCircleOutline } from 'ionicons/icons';
 import { chevronBackOutline } from 'ionicons/icons';
-import ContactAvatar from '../../ContactAvatar.jsx';
+import ContactAvatar from '@components/ContactAvatar.jsx';
 import ChatOptionsMenu from './ChatOptionsMenu.jsx';
-import ConfirmationModal from '../../modal/ConfirmationModal.jsx';
+import ConfirmationModal from '@components/modal/home/ConfirmationModal.jsx';
 import './ChatTop.css';
 
 const ChatTop = ({ name, image, onBack, contactInfo }) => {
@@ -51,6 +51,7 @@ const ChatTop = ({ name, image, onBack, contactInfo }) => {
         setShowDeleteModal(false);
         onBack(); // Volver a la lista de chats después de eliminar
     };
+
     return (
         // <--ChatTop component-->
          <div className="chat-top">
