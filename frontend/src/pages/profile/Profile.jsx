@@ -6,7 +6,7 @@ import useAuthStore from '../../stores/use-auth-store';
 import userApi from '../../services/api/users';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 import './Profile.css';
-import ViewImageModal from '../../components/modal/ViewImageModal';
+import ViewImageModal from '../../components/modal/profile/ViewImageModal.jsx';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -321,7 +321,7 @@ const Profile = () => {
             </div>
 
             {/* Modal para ver imagen */}
-            <ViewImageModal 
+            <ViewImageModal
                 open={showImageModal} 
                 onClose={() => setShowImageModal(false)} 
                 imageUrl={currentPhotoURL} 

@@ -5,7 +5,7 @@ import { ellipsisVerticalCircleOutline } from 'ionicons/icons';
 import { chevronBackOutline } from 'ionicons/icons';
 import ContactAvatar from '../../ContactAvatar.jsx';
 import ChatOptionsMenu from './ChatOptionsMenu.jsx';
-import ConfirmationModal from '../../modal/ConfirmationModal.jsx';
+import ConfirmationModal from '../../modal/home/ConfirmationModal.jsx';
 import './ChatTop.css';
 
 const ChatTop = ({ name, image, onBack, contactInfo }) => {

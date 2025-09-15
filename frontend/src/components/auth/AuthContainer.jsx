@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from './AuthForm.jsx';
 import Register from './Register.jsx';
-import AnonymousWarningModal from '../modal/AnonymousWarningModal.jsx';
 import useAuthStore from '../../stores/use-auth-store.js';
+import AnonymousWarningModal from '../modal/login/AnonymousWarningModal.jsx';
 
 const AuthContainer = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
