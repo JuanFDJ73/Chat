@@ -322,6 +322,7 @@ const Profile = () => {
 
             {/* Modal para ver imagen */}
             <ViewImageModal
+            <ViewImageModal
                 open={showImageModal} 
                 onClose={() => setShowImageModal(false)} 
                 imageUrl={currentPhotoURL} 
