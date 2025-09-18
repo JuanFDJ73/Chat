@@ -12,7 +12,10 @@ const Chat = ({ name, image, onBack, activeContact, conversationId }) => {
                 onBack={onBack}
                 contactInfo={activeContact}
             />
-            <ChatMessages conversationId={conversationId} />
+            <ChatMessages 
+                conversationId={conversationId} 
+                contactName={name}
+            />
             <ChatInput activeContact={activeContact} conversationId={conversationId} />
         </div>
     );

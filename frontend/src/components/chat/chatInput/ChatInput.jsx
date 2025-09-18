@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import socketService from '../../../services/socket';
-import useAuthStore from '../../../stores/use-auth-store';
+import socketService from '@services/socket';
+import useAuthStore from '@stores/use-auth-store';
 import './ChatInput.css';
 
 const ChatInput = ({ activeContact, conversationId }) => {

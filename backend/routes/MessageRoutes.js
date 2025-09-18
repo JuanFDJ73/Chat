@@ -1,7 +1,7 @@
 import express from 'express';
 import { getMessagesByConversation, getMessageById } from './MessageRoutes/GetMessage.routes.js';
 import { createMessage, markMessageAsRead } from './MessageRoutes/PostMessage.routes.js';
-import { deleteMessage, deleteMessagePermanently } from './MessageRoutes/DeleteMessage.routes.js';
+import { deleteMessageForUser, deleteMessageForAll } from './MessageRoutes/DeleteMessage.routes.js';
 
 const router = express.Router();
 
@@ -17,10 +17,10 @@ router.post('/', createMessage);
 // POST - Marcar mensaje como leído
 router.post('/read/:messageId', markMessageAsRead);
 
-// DELETE - Eliminar mensaje (soft delete)
-router.delete('/:messageId', deleteMessage);
+// PUT - Eliminar mensaje para un usuario específico
+router.put('/:messageId/delete-for-user', deleteMessageForUser);
 
-// DELETE - Eliminar mensaje permanentemente
-router.delete('/permanent/:messageId', deleteMessagePermanently);
+// PUT - Eliminar mensaje para todos los participantes
+router.put('/:messageId/delete-for-all', deleteMessageForAll);
 
 export default router;
