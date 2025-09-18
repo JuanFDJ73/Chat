@@ -3,6 +3,8 @@ import { personAddOutline } from "ionicons/icons";
 import { IonIcon } from "@ionic/react";
 import './SearchResults.css';
 
+
+// Componente para mostrar los resultados de búsqueda de usuarios
 const SearchResults = ({ searchResults = [], handleAddContact }) => {
     return (
         <div className="search-results">

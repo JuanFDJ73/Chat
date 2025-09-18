@@ -3,6 +3,7 @@ import { IonIcon } from '@ionic/react';
 import { warningOutline, closeOutline } from 'ionicons/icons';
 import './ConfirmationModal.css';
 
+//Modales de confirmación genéricos para acciones como bloquear o eliminar contacto
 const ConfirmationModal = ({ 
     isOpen, 
     onClose, 

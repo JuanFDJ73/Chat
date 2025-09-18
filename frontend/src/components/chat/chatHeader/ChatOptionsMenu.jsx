@@ -8,7 +8,7 @@ import {
 } from 'ionicons/icons';
 import './ChatOptionsMenu.css';
 
-const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockContact, onDeleteContact }) => {
+const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockContact, onDeleteContact, isLoadingProfile }) => {
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -51,9 +51,13 @@ const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockC
             </div>
             
             <div className="chat-options-list">
-                <button className="chat-option-item" onClick={handleViewProfile}>
+                <button 
+                    className={`chat-option-item ${isLoadingProfile ? 'loading' : ''}`} 
+                    onClick={handleViewProfile}
+                    disabled={isLoadingProfile}
+                >
                     <IonIcon icon={eyeOutline} className="option-icon" />
-                    <span>Ver perfil</span>
+                    <span>{isLoadingProfile ? 'Cargando...' : 'Ver perfil'}</span>
                 </button>
 
                 <button className="chat-option-item" onClick={handleBlockContact}>

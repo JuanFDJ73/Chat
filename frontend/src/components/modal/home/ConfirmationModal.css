@@ -47,27 +47,6 @@
     background: var(--warning-color);
 }
 
-.confirmation-modal .close-button {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.3rem;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 16px;
-}
-
-.confirmation-modal .close-button:hover {
-    background: var(--hover-background);
-    color: var(--text-primary);
-}
-
 .confirmation-modal .modal-body {
     padding: 24px;
     text-align: center;

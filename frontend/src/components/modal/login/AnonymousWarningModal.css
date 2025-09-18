@@ -38,27 +38,6 @@
     left: 24px;
 }
 
-.anonymous-warning-modal .close-button {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 16px;
-}
-
-.anonymous-warning-modal .close-button:hover {
-    background: var(--button-background);
-    color: var(--text-primary);
-}
-
 .anonymous-warning-modal .modal-body {
     padding: 24px;
 }

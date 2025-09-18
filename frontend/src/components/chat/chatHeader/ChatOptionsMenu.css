@@ -59,6 +59,21 @@
     opacity: 1;
 }
 
+.chat-option-item.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.chat-option-item.loading:hover {
+    background: var(--info-background);
+}
+
+.chat-option-item:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .chat-option-item span {
     flex: 1;
     font-weight: 500;

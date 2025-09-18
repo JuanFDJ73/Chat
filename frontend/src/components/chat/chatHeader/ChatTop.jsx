@@ -6,12 +6,17 @@ import { chevronBackOutline } from 'ionicons/icons';
 import ContactAvatar from '@components/ContactAvatar.jsx';
 import ChatOptionsMenu from './ChatOptionsMenu.jsx';
 import ConfirmationModal from '@components/modal/home/ConfirmationModal.jsx';
+import ContactProfileModal from '@components/modal/home/ContactProfileModal.jsx';
+import userApi from '@services/api/users.js';
 import './ChatTop.css';
 
 const ChatTop = ({ name, image, onBack, contactInfo }) => {
     const [showOptionsMenu, setShowOptionsMenu] = useState(false);
     const [showBlockModal, setShowBlockModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false);
+    const [fullContactInfo, setFullContactInfo] = useState(null);
+    const [loadingProfile, setLoadingProfile] = useState(false);
 
     const handleOptionsClick = () => {
         setShowOptionsMenu(!showOptionsMenu);
@@ -21,10 +26,32 @@ const ChatTop = ({ name, image, onBack, contactInfo }) => {
         setShowOptionsMenu(false);
     };
 
-    const handleViewProfile = () => {
-        console.log('Ver perfil de:', contactInfo);
-        // TODO: Implementar modal de perfil del contacto
-        alert(`Ver perfil de ${name}`);
+    const handleViewProfile = async () => {
+        setLoadingProfile(true);
+        try {
+            // Obtener información completa del contacto desde la API
+            const fullProfile = await userApi.getUserByUid(contactInfo.uid);
+            setFullContactInfo({
+                ...fullProfile,
+                displayName: name, // Usar el nombre que ya tenemos
+                photoURL: image,   // Usar la imagen que ya tenemos
+                uid: contactInfo.uid
+            });
+            setShowProfileModal(true);
+        } catch (error) {
+            console.error('Error al cargar perfil del contacto:', error);
+            // Si hay error, mostrar con la información que tenemos
+            setFullContactInfo({
+                displayName: name,
+                photoURL: image,
+                uid: contactInfo.uid,
+                email: 'No disponible',
+                description: 'No disponible'
+            });
+            setShowProfileModal(true);
+        } finally {
+            setLoadingProfile(false);
+        }
     };
 
     const handleBlockContact = () => {
@@ -81,8 +108,16 @@ const ChatTop = ({ name, image, onBack, contactInfo }) => {
                     onViewProfile={handleViewProfile}
                     onBlockContact={handleBlockContact}
                     onDeleteContact={handleDeleteContact}
+                    isLoadingProfile={loadingProfile}
                 />
             </div>
+
+            {/* Modal de perfil del contacto */}
+            <ContactProfileModal
+                isOpen={showProfileModal}
+                onClose={() => setShowProfileModal(false)}
+                contactInfo={fullContactInfo}
+            />
 
             {/* Modal de confirmación para bloquear */}
             <ConfirmationModal
