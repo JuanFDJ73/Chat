@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import MessageSent from '../messages/MessageSent.jsx';
 import MessageReceived from '../messages/MessageReceived.jsx';
-import messagesApi from '../../../services/api/messages.js';
-import socketService from '../../../services/socket.js';
-import useAuthStore from '../../../stores/use-auth-store.js';
-import { groupMessagesByDay } from '../../../utils/DateUtils';
+import messagesApi from '@services/api/messages.js';
+import socketService from '@services/socket.js';
+import useAuthStore from '@stores/use-auth-store.js';
+import { groupMessagesByDay } from '@utils/DateUtils';
 import DateSeparator from '../messages/DateSeparator';
 import './ChatMessages.css';
 
-const ChatMessages = ({ conversationId }) => {
+const ChatMessages = ({ conversationId, contactName }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const { userLogged } = useAuthStore();
@@ -30,6 +30,11 @@ const ChatMessages = ({ conversationId }) => {
         });
     }, []);
 
+    // Función para eliminar mensaje del estado local
+    const handleMessageDeleted = useCallback((messageId) => {
+        setMessages(prevMessages => prevMessages.filter(msg => msg._id !== messageId));
+    }, []);
+
     // Scroll hacia abajo cuando cambien los mensajes
     useEffect(() => {
         scrollToBottom();
@@ -37,11 +42,12 @@ const ChatMessages = ({ conversationId }) => {
 
     useEffect(() => {
         const loadMessages = async () => {
-            if (!conversationId) return;
+            if (!conversationId || !userLogged) return;
             
             try {
                 setLoading(true);
-                const messagesData = await messagesApi.getConversationMessages(conversationId);
+                // Pasar el UID del usuario para filtrar mensajes eliminados
+                const messagesData = await messagesApi.getConversationMessages(conversationId, userLogged.uid);
                 setMessages(messagesData);
             } catch (error) {
                 console.error('Error loading messages:', error);
@@ -51,7 +57,7 @@ const ChatMessages = ({ conversationId }) => {
         };
 
         loadMessages();
-    }, [conversationId]);
+    }, [conversationId, userLogged]);
 
     useEffect(() => {
         if (!userLogged) return;
@@ -127,20 +133,22 @@ const ChatMessages = ({ conversationId }) => {
                     } else if (item.type === 'message') {
                         // Usar _id del mensaje o fallback al índice
                         const messageKey = item._id || item.id || `message-${index}`;
-                        const isCurrentUser = item.sender === userLogged?.id || item.senderId === userLogged?.id;
+                        const isCurrentUser = item.sender === userLogged?.uid;
                         
-                        console.log('Message key:', messageKey); // Debug
-                        console.log('Message object:', item); // Debug
                         
                         return isCurrentUser ? (
                             <MessageSent 
                                 key={messageKey} 
                                 message={item} 
+                                contactName={contactName}
+                                onMessageDeleted={handleMessageDeleted}
                             />
                         ) : (
                             <MessageReceived 
                                 key={messageKey} 
                                 message={item} 
+                                contactName={contactName}
+                                onMessageDeleted={handleMessageDeleted}
                             />
                         );
                     }

@@ -1,0 +1,207 @@
+.message-delete-modal {
+    background: var(--card-background);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    animation: modalAppear 0.3s ease-out;
+}
+
+.message-delete-modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.message-delete-modal .modal-header h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.message-delete-modal .delete-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    background: var(--danger-color);
+    position: absolute;
+    left: 24px;
+}
+
+.message-delete-modal .close-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--hover-background);
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.message-delete-modal .close-button:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.message-delete-modal .modal-body {
+    padding: 24px;
+    text-align: center;
+}
+
+.message-delete-modal .modal-body p {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.message-delete-modal .modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 24px 24px 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.message-delete-modal .delete-option-button {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-primary);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.message-delete-modal .delete-option-button:hover {
+    background: var(--hover-background);
+    border-color: var(--text-secondary);
+}
+
+.message-delete-modal .delete-option-button.delete-all {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.message-delete-modal .delete-option-button.delete-all:hover {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: var(--danger-color);
+}
+
+.message-delete-modal .delete-option-button ion-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.message-delete-modal .button-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.message-delete-modal .button-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.message-delete-modal .button-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-weight: 400;
+}
+
+.message-delete-modal .cancel-button {
+    padding: 14px 20px;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.message-delete-modal .cancel-button:hover {
+    background: var(--hover-background);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.message-delete-modal .delete-option-button:disabled,
+.message-delete-modal .cancel-button:disabled,
+.message-delete-modal .close-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .message-delete-modal {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .message-delete-modal .modal-header {
+        padding: 20px 20px 16px 20px;
+    }
+    
+    .message-delete-modal .modal-body {
+        padding: 20px;
+    }
+    
+    .message-delete-modal .modal-buttons {
+        padding: 16px 20px 20px 20px;
+    }
+    
+    .message-delete-modal .delete-option-button {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    
+    .message-delete-modal .button-title {
+        font-size: 0.95rem;
+    }
+    
+    .message-delete-modal .button-subtitle {
+        font-size: 0.8rem;
+    }
+}

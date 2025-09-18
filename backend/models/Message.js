@@ -31,9 +31,9 @@ const MessageSchema = new mongoose.Schema({
     enum: ['text', 'image', 'file'],
     default: 'text'
   },
-  isDeleted: {
-    type: Boolean,
-    default: false
+  isDeletedBy: {
+    type: [String],
+    default: []
   }
 });
 

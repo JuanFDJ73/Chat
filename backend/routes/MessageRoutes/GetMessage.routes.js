@@ -5,9 +5,18 @@ import Message from '../../models/Message.js';
  */
 export const getMessagesByConversation = async (req, res) => {
   try {
-    const messages = await Message.find({
+    const { uid } = req.query; // UID del usuario que solicita los mensajes
+    
+    let filter = {
       conversationId: req.params.conversationId
-    }).sort({ timestamp: 1 }); // del más antiguo al más nuevo
+    };
+
+    // Si se proporciona un UID, filtrar mensajes que no estén eliminados para ese usuario
+    if (uid) {
+      filter.isDeletedBy = { $ne: uid };
+    }
+
+    const messages = await Message.find(filter).sort({ timestamp: 1 }); // del más antiguo al más nuevo
 
     res.json(messages);
   } catch (err) {

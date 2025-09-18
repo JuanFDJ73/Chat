@@ -1,12 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IonIcon } from '@ionic/react';
 import { ellipsisVerticalOutline, eyeOutline, trashOutline, copyOutline } from 'ionicons/icons';
+import MessageDeleteModal from '@components/modal/home/MessageDeleteModal.jsx';
+import messagesApi from '@services/api/messages.js';
+import useAuthStore from '@stores/use-auth-store.js';
 import './MessageSent.css';
 
-const MessageSent = ({ message }) => {
+const MessageSent = ({ message, contactName, onMessageDeleted }) => {
     const [showMessagesOptions, setShowMessagesOptions] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const optionsRef = useRef(null);
     const buttonRef = useRef(null);
+
+    const { userLogged } = useAuthStore();
 
     // Cerrar menú al hacer clic fuera
     useEffect(() => {
@@ -42,7 +49,40 @@ const MessageSent = ({ message }) => {
     const handleDeleteMessage = () => {
         console.log("Delete message clicked, ID:", message._id);
         setShowMessagesOptions(false);
+        setShowDeleteModal(true);
     }
+
+    const handleDeleteForMe = async () => {
+        setIsDeleting(true);
+        try {
+            await messagesApi.deleteMessageForUser(message._id, userLogged.uid);
+            setShowDeleteModal(false);
+            if (onMessageDeleted) {
+                onMessageDeleted(message._id);
+            }
+        } catch (error) {
+            console.error('Error al eliminar mensaje para mí:', error);
+            alert('Error al eliminar el mensaje. Intenta de nuevo.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleDeleteForAll = async () => {
+        setIsDeleting(true);
+        try {
+            await messagesApi.deleteMessageForAll(message._id, userLogged.uid);
+            setShowDeleteModal(false);
+            if (onMessageDeleted) {
+                onMessageDeleted(message._id);
+            }
+        } catch (error) {
+            console.error('Error al eliminar mensaje para todos:', error);
+            alert('Error al eliminar el mensaje. Intenta de nuevo.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     // Formatear el timestamp
     const formatTime = (timestamp) => {
@@ -86,6 +126,17 @@ const MessageSent = ({ message }) => {
                 <p>{message.content}</p>
                 <span className="timestamp">{formatTime(message.timestamp)}</span>
             </div>
+
+            {/* Modal de opciones de eliminación */}
+            <MessageDeleteModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onDeleteForMe={handleDeleteForMe}
+                onDeleteForAll={handleDeleteForAll}
+                isOwnMessage={true}
+                isLoading={isDeleting}
+                contactName={contactName || 'el contacto'}
+            />
         </div>
     );
 };

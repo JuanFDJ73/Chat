@@ -1,5 +1,6 @@
 import './MistakeModal.css';
 
+// Modal para mostrar errores o mensajes informativos
 const MistakeModal = ({ title, text, onAccept, onClose }) => {
     return (
         <div className="overlay">

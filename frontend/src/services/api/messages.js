@@ -1,6 +1,11 @@
-const getConversationMessages = async (conversationId) => {
+const getConversationMessages = async (conversationId, uid = null) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${conversationId}`);
+        let url = `${import.meta.env.VITE_API_URL}/api/messages/${conversationId}`;
+        if (uid) {
+            url += `?uid=${uid}`;
+        }
+        
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Error al obtener mensajes');
         }
@@ -32,19 +37,46 @@ const sendMessage = async (messageData) => {
     }
 };
 
-const deleteMessage = async (messageId) => {
+// Eliminar mensaje para un usuario específico
+const deleteMessageForUser = async (messageId, uid) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}`, {
-            method: 'DELETE',
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}/delete-for-user`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid }),
         });
 
         if (!response.ok) {
-            throw new Error('Error al eliminar mensaje');
+            throw new Error('Error al eliminar mensaje para usuario');
         }
 
         return await response.json();
     } catch (error) {
-        console.error('Error deleting message:', error);
+        console.error('Error deleting message for user:', error);
+        throw error;
+    }
+};
+
+// Eliminar mensaje para todos los participantes
+const deleteMessageForAll = async (messageId, uid) => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}/delete-for-all`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ uid }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar mensaje para todos');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting message for all:', error);
         throw error;
     }
 };
@@ -69,6 +101,7 @@ const markMessageAsRead = async (messageId) => {
 export default {
     getConversationMessages,
     sendMessage,
-    deleteMessage,
+    deleteMessageForUser,
+    deleteMessageForAll,
     markMessageAsRead,
 };

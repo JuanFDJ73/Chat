@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { IonIcon } from '@ionic/react';
-import { personAddOutline, closeOutline, searchOutline } from 'ionicons/icons';
-import userApi from '../../services/api/users.js';
-import conversationsApi from '../../services/api/conversations.js';
+import { closeOutline, searchOutline } from 'ionicons/icons';
+import userApi from '@services/api/users.js';
+import conversationsApi from '@services/api/conversations.js';
 import SearchResults from './SearchResults.jsx';
 import MistakeModal from './MistakeModal.jsx';
-import useAuthStore from '../../stores/use-auth-store.js';
-import useConversationsStore from '../../stores/use-conversations-store.js';
+import useAuthStore from '@stores/use-auth-store.js';
+import useConversationsStore from '@stores/use-conversations-store.js';
 import './AddContactModal.css';
 
+// Modal para buscar y agregar un nuevo contacto
 const AddContactModal = ({ isOpen, onClose }) => {
     const [searchValue, setSearchValue] = useState('');
     const [searchResults, setSearchResults] = useState([]);
