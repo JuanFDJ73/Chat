@@ -124,6 +124,21 @@ export const getConversationsWithNames = async (req, res) => {
           ]
         }).sort({ timestamp: -1 });
 
+        //Si no hay mensajes en la conversación, verificar quién la creó
+        if (!lastMessage) {
+          // Verificar si hay algún mensaje en la conversación (incluso eliminado)
+          const anyMessage = await Message.findOne({ conversationId: conv._id });
+          
+          // Si no existe ningún mensaje, verificar quién inició la conversación
+          if (!anyMessage) {
+            // Si el usuario actual NO es el primer participante (quien agregó el contacto),
+            // entonces no debe ver esta conversación hasta que haya mensajes
+            if (conv.participants[0] !== req.params.uid) {
+              return null; // Esta conversación se filtrará
+            }
+          }
+        }
+
         return {
           ...conv.toObject(),
           contactInfo: {
@@ -142,7 +157,10 @@ export const getConversationsWithNames = async (req, res) => {
       })
     );
 
-    res.json(enrichedConversations);
+    // Filtrar conversaciones null (las que no debe ver el usuario)
+    const filteredConversations = enrichedConversations.filter(conv => conv !== null);
+
+    res.json(filteredConversations);
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Error al obtener conversaciones' });

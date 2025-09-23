@@ -63,6 +63,9 @@ const Home = () => {
             isFromCurrentUser: false, // Siempre false para mensajes recibidos
             timestamp: message.timestamp
           });
+          
+          // Recargar conversaciones para detectar conversaciones nuevas que se hacen visibles
+          loadConversations(userLogged, true);
         }
       };
 
