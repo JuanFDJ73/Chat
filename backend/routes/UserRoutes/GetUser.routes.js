@@ -115,9 +115,13 @@ export const getConversationsWithNames = async (req, res) => {
           }
         }
 
-        // Obtener último mensaje de la conversación
+        // Obtener último mensaje de la conversación que no esté eliminado para este usuario
         const lastMessage = await Message.findOne({
-          conversationId: conv._id
+          conversationId: conv._id,
+          $or: [
+            { isDeletedBy: { $exists: false } }, // Mensajes sin campo isDeletedBy
+            { isDeletedBy: { $ne: req.params.uid } } // Mensajes donde el usuario no está en isDeletedBy
+          ]
         }).sort({ timestamp: -1 });
 
         return {
