@@ -16,7 +16,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { userLogged } = useAuthStore();
-    const { invalidateCache } = useConversationsStore();
+    const { addConversation, loadConversations } = useConversationsStore();
 
     const handleSearch = async () => {
         try {
@@ -39,8 +39,20 @@ const AddContactModal = ({ isOpen, onClose }) => {
                 
                 console.log('Conversación creada:', conversation);
                 
-                // Invalidar cache para forzar recarga de conversaciones
-                invalidateCache();
+                // Crear el objeto de conversación enriquecido para el store
+                const enrichedConversation = {
+                    ...conversation,
+                    contactInfo: {
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        hasNickname: false
+                    },
+                    lastMessage: null // Nueva conversación sin mensajes
+                };
+                
+                // Agregar la conversación inmediatamente al store
+                addConversation(enrichedConversation);
                 
                 // Cerrar modal y limpiar datos
                 handleClose()

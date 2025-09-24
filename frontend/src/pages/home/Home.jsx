@@ -63,6 +63,9 @@ const Home = () => {
             isFromCurrentUser: false, // Siempre false para mensajes recibidos
             timestamp: message.timestamp
           });
+          
+          // Recargar conversaciones para detectar conversaciones nuevas que se hacen visibles
+          loadConversations(userLogged, true);
         }
       };
 
@@ -146,9 +149,9 @@ const Home = () => {
                   <ContactButton
                     key={conv._id}
                     name={conv.contactInfo.displayName}
-                    lastMessage={conv.lastMessage?.content || 'Sin mensajes'}
+                    lastMessage={conv.lastMessage?.content || ''}
                     image={conv.contactInfo.photoURL}
-                    isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser}
+                    isLastMessageFromCurrentUser={conv.lastMessage?.isFromCurrentUser || false}
                     onClick={() => handleContactClick({
                       name: conv.contactInfo.displayName,
                       uid: conv.contactInfo.uid,

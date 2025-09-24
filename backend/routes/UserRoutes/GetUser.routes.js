@@ -99,6 +99,24 @@ export const getConversationsWithNames = async (req, res) => {
 
         // Buscar en la lista de contactos del usuario
         const userContact = user.contacts.find(c => c.uid === otherParticipantUid);
+        
+        // Si el contacto no está en la lista de contactos del usuario,
+        // verificar si tiene mensajes visibles. Si no tiene, no mostrar la conversación
+        if (!userContact) {
+          // Verificar si hay mensajes no eliminados en esta conversación
+          const visibleMessage = await Message.findOne({
+            conversationId: conv._id,
+            $or: [
+              { isDeletedBy: { $exists: false } }, // Mensajes sin campo isDeletedBy
+              { isDeletedBy: { $ne: req.params.uid } } // Mensajes donde el usuario no está en isDeletedBy
+            ]
+          });
+          
+          // Si no hay mensajes visibles, no mostrar esta conversación
+          if (!visibleMessage) {
+            return null;
+          }
+        }
 
         let displayName = otherParticipantUid; // Fallback por defecto
         let photoURL = null;
@@ -115,10 +133,29 @@ export const getConversationsWithNames = async (req, res) => {
           }
         }
 
-        // Obtener último mensaje de la conversación
+        // Obtener último mensaje de la conversación que no esté eliminado para este usuario
         const lastMessage = await Message.findOne({
-          conversationId: conv._id
+          conversationId: conv._id,
+          $or: [
+            { isDeletedBy: { $exists: false } }, // Mensajes sin campo isDeletedBy
+            { isDeletedBy: { $ne: req.params.uid } } // Mensajes donde el usuario no está en isDeletedBy
+          ]
         }).sort({ timestamp: -1 });
+
+        //Si no hay mensajes en la conversación, verificar quién la creó
+        if (!lastMessage) {
+          // Verificar si hay algún mensaje en la conversación (incluso eliminado)
+          const anyMessage = await Message.findOne({ conversationId: conv._id });
+          
+          // Si no existe ningún mensaje, verificar quién inició la conversación
+          if (!anyMessage) {
+            // Si el usuario actual NO es el primer participante (quien agregó el contacto),
+            // entonces no debe ver esta conversación hasta que haya mensajes
+            if (conv.participants[0] !== req.params.uid) {
+              return null; // Esta conversación se filtrará
+            }
+          }
+        }
 
         return {
           ...conv.toObject(),
@@ -138,7 +175,10 @@ export const getConversationsWithNames = async (req, res) => {
       })
     );
 
-    res.json(enrichedConversations);
+    // Filtrar conversaciones null (las que no debe ver el usuario)
+    const filteredConversations = enrichedConversations.filter(conv => conv !== null);
+
+    res.json(filteredConversations);
   } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Error al obtener conversaciones' });

@@ -4,11 +4,12 @@ import {
     personOutline, 
     lockClosedOutline, 
     trashOutline,
-    eyeOutline
+    eyeOutline,
+    chatboxOutline
 } from 'ionicons/icons';
 import './ChatOptionsMenu.css';
 
-const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockContact, onDeleteContact, isLoadingProfile }) => {
+const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockContact, onDeleteContact, onDeleteMessages, isLoadingProfile }) => {
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -44,6 +45,11 @@ const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockC
         onClose();
     };
 
+    const handleDeleteMessages = () => {
+        onDeleteMessages();
+        onClose();
+    };
+
     return (
         <div className="chat-options-menu" ref={menuRef}>
             <div className="chat-options-header">
@@ -63,6 +69,11 @@ const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockC
                 <button className="chat-option-item" onClick={handleBlockContact}>
                     <IonIcon icon={lockClosedOutline} className="option-icon" />
                     <span>Bloquear contacto</span>
+                </button>
+
+                <button className="chat-option-item warning" onClick={handleDeleteMessages}>
+                    <IonIcon icon={chatboxOutline} className="option-icon" />
+                    <span>Eliminar mensajes</span>
                 </button>
 
                 <button className="chat-option-item danger" onClick={handleDeleteContact}>

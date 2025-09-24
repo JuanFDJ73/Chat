@@ -24,6 +24,7 @@ import {
   deleteDescription, 
   deletePhotoURL, 
   deleteContact, 
+  deleteContactCompletely,
   deleteUser 
 } from './UserRoutes/DeleteUser.routes.js';
 
@@ -56,6 +57,7 @@ router.put('/:uid/photo-url', updatePhotoURL);
 router.delete('/:uid/description', deleteDescription);
 router.delete('/:uid/photo-url', deletePhotoURL);
 router.delete('/:uid/contacts/:contactUid', deleteContact);
+router.delete('/:uid/contacts/:contactUid/completely', deleteContactCompletely);
 router.delete('/:uid', deleteUser);
 
 export default router;

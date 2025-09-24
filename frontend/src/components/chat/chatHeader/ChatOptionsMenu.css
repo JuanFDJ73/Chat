@@ -47,7 +47,15 @@
 }
 
 .chat-option-item.danger:hover {
-    background: var(--danger-background, rgba(255, 71, 87, 0.1));
+    background: var(--danger-background);
+}
+
+.chat-option-item.warning {
+    color: var(--warning-color);
+}
+
+.chat-option-item.warning:hover {
+    background: var(--warning-background);
 }
 
 .chat-option-item .option-icon {
@@ -56,6 +64,10 @@
 }
 
 .chat-option-item.danger .option-icon {
+    opacity: 1;
+}
+
+.chat-option-item.warning .option-icon {
     opacity: 1;
 }
 
