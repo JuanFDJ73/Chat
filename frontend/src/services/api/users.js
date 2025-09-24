@@ -184,6 +184,18 @@ const uploadProfileImage = async (userUid, file) => {
     }
 };
 
+// Eliminar contacto completamente (contacto + mensajes)
+const deleteContactCompletely = async (userUid, contactUid) => {
+    const response = await fetch(`${API_URL}/api/users/${userUid}/contacts/${contactUid}/completely`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al eliminar contacto completamente');
+    }
+    return await response.json();
+};
+
 // Eliminar imagen de perfil
 const deleteProfileImage = async (userUid) => {
     try {
@@ -234,5 +246,6 @@ export default {
     deleteDescription,
     getProfileImage,
     uploadProfileImage,
-    deleteProfileImage
+    deleteProfileImage,
+    deleteContactCompletely
 };

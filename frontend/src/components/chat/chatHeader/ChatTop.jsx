@@ -83,13 +83,27 @@ const ChatTop = ({ name, image, onBack, contactInfo }) => {
         setShowBlockModal(false);
     };
 
-    const confirmDeleteContact = () => {
-        console.log('Eliminando contacto:', contactInfo);
-        // TODO: Implementar lógica de eliminación
-        // alert(`${name} ha sido eliminado de tus contactos`);
-        alert(`Esta opcion aun sigue en desarrollo`);
-        setShowDeleteModal(false);
-        onBack(); // Volver a la lista de chats después de eliminar
+    const confirmDeleteContact = async () => {
+        setDeletingContact(true);
+        try {
+            console.log('Eliminando contacto completamente:', contactInfo);
+            
+            // Eliminar contacto completamente (mensajes + contacto)
+            const result = await userApi.deleteContactCompletely(userLogged.uid, contactInfo.uid);
+            
+            console.log('Contacto eliminado:', result);
+            
+            // Recargar conversaciones para reflejar los cambios
+            await loadConversations(userLogged, true);
+            
+            setShowDeleteModal(false);
+            onBack(); // Volver a la lista de chats después de eliminar
+        } catch (error) {
+            console.error('Error al eliminar contacto:', error);
+            alert('Error al eliminar el contacto. Intenta de nuevo.');
+        } finally {
+            setDeletingContact(false);
+        }
     };
 
     const confirmDeleteMessages = async () => {
@@ -182,10 +196,11 @@ const ChatTop = ({ name, image, onBack, contactInfo }) => {
                 onClose={() => setShowDeleteModal(false)}
                 onConfirm={confirmDeleteContact}
                 title="Eliminar contacto"
-                message={`¿Estás seguro de que quieres eliminar a ${name} de tus contactos? Esta acción no se puede deshacer.`}
-                confirmText="Eliminar"
+                message={`¿Estás seguro de que quieres eliminar a ${name} de tus contactos? Esta acción eliminará todos los mensajes y no se puede deshacer.`}
+                confirmText="Eliminar contacto"
                 cancelText="Cancelar"
                 type="danger"
+                loading={deletingContact}
             />
 
             {/* Modal de confirmación para eliminar mensajes */}

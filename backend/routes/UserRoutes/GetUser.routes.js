@@ -99,6 +99,24 @@ export const getConversationsWithNames = async (req, res) => {
 
         // Buscar en la lista de contactos del usuario
         const userContact = user.contacts.find(c => c.uid === otherParticipantUid);
+        
+        // Si el contacto no está en la lista de contactos del usuario,
+        // verificar si tiene mensajes visibles. Si no tiene, no mostrar la conversación
+        if (!userContact) {
+          // Verificar si hay mensajes no eliminados en esta conversación
+          const visibleMessage = await Message.findOne({
+            conversationId: conv._id,
+            $or: [
+              { isDeletedBy: { $exists: false } }, // Mensajes sin campo isDeletedBy
+              { isDeletedBy: { $ne: req.params.uid } } // Mensajes donde el usuario no está en isDeletedBy
+            ]
+          });
+          
+          // Si no hay mensajes visibles, no mostrar esta conversación
+          if (!visibleMessage) {
+            return null;
+          }
+        }
 
         let displayName = otherParticipantUid; // Fallback por defecto
         let photoURL = null;
