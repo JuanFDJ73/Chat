@@ -56,17 +56,20 @@ export const getUserByDisplayName = async (req, res) => {
 };
 
 /**
- * Buscar usuario por email o displayName
+ * Buscar usuario por email o displayName (búsqueda insensible a mayúsculas)
  */
 export const searchUser = async (req, res) => {
   try {
     const searchTerm = req.params.searchTerm;
     
-    // Buscar por email o displayName
+    // Crear expresión regular para búsqueda insensible a mayúsculas
+    const searchRegex = new RegExp(`^${searchTerm}$`, 'i');
+    
+    // Buscar por email o displayName con expresión regular
     const user = await User.findOne({
       $or: [
-        { email: searchTerm },
-        { displayName: searchTerm }
+        { email: { $regex: searchRegex } },
+        { displayName: { $regex: searchRegex } }
       ]
     });
     
