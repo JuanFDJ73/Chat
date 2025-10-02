@@ -109,6 +109,23 @@
     font-style: italic;
 }
 
+.admin-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.admin-info-button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.admin-info-button:hover {
+    transform: translateY(-1px);
+    color: white
+}
+
 /* Dark mode */
 .dark-mode .modal-content {
     background-color: var(--background-color);

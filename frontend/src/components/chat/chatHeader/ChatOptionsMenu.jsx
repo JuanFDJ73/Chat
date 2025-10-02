@@ -71,10 +71,10 @@ const ChatOptionsMenu = ({ isOpen, onClose, contactInfo, onViewProfile, onBlockC
                     <span>Bloquear contacto</span>
                 </button>
 
-                <button className="chat-option-item warning" onClick={handleDeleteMessages}>
+                {/* <button className="chat-option-item warning" onClick={handleDeleteMessages}>
                     <IonIcon icon={chatboxOutline} className="option-icon" />
                     <span>Eliminar mensajes</span>
-                </button>
+                </button> */}
 
                 <button className="chat-option-item danger" onClick={handleDeleteContact}>
                     <IonIcon icon={trashOutline} className="option-icon" />

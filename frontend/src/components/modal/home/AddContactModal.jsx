@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { IonIcon } from '@ionic/react';
-import { closeOutline, searchOutline } from 'ionicons/icons';
+import { closeOutline, searchOutline, helpCircleOutline } from 'ionicons/icons';
 import userApi from '@services/api/users.js';
 import conversationsApi from '@services/api/conversations.js';
 import SearchResults from './SearchResults.jsx';
 import MistakeModal from './MistakeModal.jsx';
+import AdminInfoModal from './AdminInfoModal.jsx';
 import useAuthStore from '@stores/use-auth-store.js';
 import useConversationsStore from '@stores/use-conversations-store.js';
 import './AddContactModal.css';
@@ -15,6 +16,7 @@ const AddContactModal = ({ isOpen, onClose }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [showAdminModal, setShowAdminModal] = useState(false);
     const { userLogged } = useAuthStore();
     const { addConversation, loadConversations } = useConversationsStore();
 
@@ -75,12 +77,21 @@ const AddContactModal = ({ isOpen, onClose }) => {
         setErrorMessage('');
     };
 
+    const handleShowAdminInfo = () => {
+        setShowAdminModal(true);
+    };
+
+    const handleCloseAdminModal = () => {
+        setShowAdminModal(false);
+    };
+
     // Función para limpiar todos los datos
     const resetModalData = () => {
         setSearchValue('');
         setSearchResults([]);
         setShowErrorModal(false);
         setErrorMessage('');
+        setShowAdminModal(false);
     };
 
     // Función para cerrar el modal y limpiar datos
@@ -117,6 +128,12 @@ const AddContactModal = ({ isOpen, onClose }) => {
                                     <IonIcon icon={searchOutline} />
                                 </button>
                             </div>
+                            <div className="admin-section">
+                                <button className="admin-info-button" onClick={handleShowAdminInfo}>
+                                    <IonIcon icon={helpCircleOutline} />
+                                    ¿Cómo agregar al Admin?
+                                </button>
+                            </div>
                         </div>
                         <SearchResults
                             searchResults={searchResults}
@@ -135,6 +152,12 @@ const AddContactModal = ({ isOpen, onClose }) => {
                     onClose={handleCloseErrorModal}
                 />
             )}
+
+            {/* Modal de información del admin */}
+            <AdminInfoModal
+                isOpen={showAdminModal}
+                onClose={handleCloseAdminModal}
+            />
         </>
     );
 };
