@@ -78,7 +78,7 @@ const Settings = () => {
 
                     <div className="settings-list">
                         {/* Notificaciones */}
-                        <div className="settings-item" onClick={handleNotification}>
+                        {/* <div className="settings-item" onClick={handleNotification}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={notifications} />
@@ -91,7 +91,7 @@ const Settings = () => {
                                     <IonIcon icon={chevronForward} />
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Idioma */}
                         <div className="settings-item" onClick={handleLanguage}>
@@ -112,7 +112,7 @@ const Settings = () => {
                         </div>
 
                         {/* Privacidad */}
-                        <div className="settings-item" onClick={handlePrivacySettings}>
+                        {/* <div className="settings-item" onClick={handlePrivacySettings}>
                             <div className="settings-item-content">
                                 <div className="settings-item-icon">
                                     <IonIcon icon={lockClosed} />
@@ -127,7 +127,7 @@ const Settings = () => {
                                     <IonIcon icon={chevronForward} />
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Acerca de */}
                         <div className="settings-item" onClick={handleAbout}>
